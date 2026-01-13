@@ -4,6 +4,19 @@ import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 
+// TypeScript interfaces
+interface Skill {
+  name: string;
+  level: number;
+  color: string;
+}
+
+interface SkillCategoryData {
+  category: string;
+  icon: string;
+  skills: Skill[];
+}
+
 const Skills = () => {
   const skills = [
     {
@@ -117,7 +130,7 @@ const Skills = () => {
   );
 };
 
-const SkillCategory = ({ category, index }: { category: any; index: number }) => {
+const SkillCategory = ({ category, index }: { category: SkillCategoryData; index: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
@@ -135,7 +148,7 @@ const SkillCategory = ({ category, index }: { category: any; index: number }) =>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {category.skills.map((skill: any, skillIndex: number) => (
+        {category.skills.map((skill: Skill, skillIndex: number) => (
           <SkillBar
             key={skill.name}
             skill={skill}
@@ -148,7 +161,7 @@ const SkillCategory = ({ category, index }: { category: any; index: number }) =>
   );
 };
 
-const SkillBar = ({ skill, index, isInView }: { skill: any; index: number; isInView: boolean }) => {
+const SkillBar = ({ skill, index, isInView }: { skill: Skill; index: number; isInView: boolean }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -180,7 +193,7 @@ const SkillBar = ({ skill, index, isInView }: { skill: any; index: number; isInV
         <span className="font-medium">{skill.name}</span>
         <span className="text-sm text-primary font-semibold">{count}%</span>
       </div>
-      
+
       <div className="h-3 bg-muted rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}

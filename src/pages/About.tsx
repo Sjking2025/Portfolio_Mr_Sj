@@ -67,7 +67,7 @@ const About = () => {
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-transparent"></div>
                   <img
-                    src="/src/pages/AboutMe.jpg"
+                    src="/profile.jpg"
                     alt="Profile"
                     className="w-full h-full object-cover "
                   />

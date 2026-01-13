@@ -13,20 +13,50 @@ interface FormData {
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
+  const [error, setError] = useState<string | null>(null);
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
+
+  // Web3Forms API integration
+  // Get your free access key from: https://web3forms.com/
+  const WEB3FORMS_ACCESS_KEY = "17002730-cf21-4075-8e92-a3a6678d28d7";
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log('Form submitted:', data);
-    setIsLoading(false);
-    setIsSubmitted(true);
-    reset();
-    
-    // Reset success message after 5 seconds
-    setTimeout(() => setIsSubmitted(false), 5000);
+    setError(null);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          name: data.name,
+          email: data.email,
+          subject: data.subject,
+          message: data.message,
+          from_name: "Portfolio Contact Form",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setIsSubmitted(true);
+        reset();
+        // Reset success message after 5 seconds
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        setError("Failed to send message. Please try again.");
+      }
+    } catch (err) {
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const contactMethods = [
@@ -92,7 +122,7 @@ const Contact = () => {
             >
               <div className="glass-effect p-8 rounded-3xl">
                 <h3 className="text-2xl font-bold mb-6">Send me a message</h3>
-                
+
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
@@ -106,11 +136,11 @@ const Contact = () => {
                         <span className="text-red-400 text-sm">{errors.name.message}</span>
                       )}
                     </div>
-                    
+
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Email</label>
                       <input
-                        {...register('email', { 
+                        {...register('email', {
                           required: 'Email is required',
                           pattern: {
                             value: /^\S+@\S+$/i,
@@ -125,7 +155,7 @@ const Contact = () => {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Subject</label>
                     <input
@@ -137,7 +167,7 @@ const Contact = () => {
                       <span className="text-red-400 text-sm">{errors.subject.message}</span>
                     )}
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Message</label>
                     <textarea
@@ -150,7 +180,7 @@ const Contact = () => {
                       <span className="text-red-400 text-sm">{errors.message.message}</span>
                     )}
                   </div>
-                  
+
                   <motion.button
                     type="submit"
                     disabled={isLoading}
@@ -186,6 +216,20 @@ const Contact = () => {
                       className="mt-6 p-4 bg-green-500/20 border border-green-500/30 rounded-xl text-green-400 text-center"
                     >
                       ✅ Message sent successfully! I'll get back to you soon.
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Error message */}
+                <AnimatePresence>
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      className="mt-6 p-4 bg-red-500/20 border border-red-500/30 rounded-xl text-red-400 text-center"
+                    >
+                      ❌ {error}
                     </motion.div>
                   )}
                 </AnimatePresence>
