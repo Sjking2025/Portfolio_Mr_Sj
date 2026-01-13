@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Rocket, Users, Zap } from 'lucide-react';
 
 const About = () => {
   const containerVariants = {
@@ -26,15 +27,15 @@ const About = () => {
     {
       title: "Full-Stack Mastery",
       description: "Expert in React, Node.js, Python, and modern web technologies",
-      icon: "🚀"
+      icon: <Rocket className="w-10 h-10 text-primary" />
     },
-    
+
     {
       title: "Team Leadership",
       description: "Led development teams of 5+ developers on complex projects",
-      icon: "👥"
+      icon: <Users className="w-10 h-10 text-primary" />
     },
-    
+
   ];
 
   return (
@@ -73,21 +74,21 @@ const About = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
                 </motion.div>
-                
+
                 {/* Floating elements */}
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-2xl"
+                  className="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center"
                 >
-                  ⚡
+                  <Zap className="w-8 h-8 text-primary" />
                 </motion.div>
               </div>
 
               <div className="space-y-4 text-center lg:text-left">
                 <h2 className="text-3xl font-bold">SANJAY R</h2>
                 <p className="text-primary font-semibold">Full-Stack Developer</p>
-              
+
               </div>
             </motion.div>
 
@@ -101,13 +102,13 @@ const About = () => {
                     What started as tinkering with HTML and CSS evolved into a deep passion for
                     creating sophisticated web applications that solve real-world problems.
                   </p>
-                  
+
                   <p>
                     Today, I specialize in building scalable web applications using React, Node.js,
                     and modern cloud technologies. I believe in writing clean, maintainable code
                     and creating intuitive user experiences that delight users.
                   </p>
-                  
+
                   <p>
                     sharing knowledge through technical writing and
                     mentoring junior developers.

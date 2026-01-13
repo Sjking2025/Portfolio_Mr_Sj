@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
+import { Mail, Phone, MapPin, Clock, Linkedin, Github, Twitter, Instagram, Send, CheckCircle, XCircle } from 'lucide-react';
 
 interface FormData {
   name: string;
@@ -61,25 +62,25 @@ const Contact = () => {
 
   const contactMethods = [
     {
-      icon: "📧",
+      icon: <Mail className="w-6 h-6" />,
       title: "Email",
       value: "sanjayias91@gmail.com",
       description: "Send me an email anytime"
     },
     {
-      icon: "📱",
+      icon: <Phone className="w-6 h-6" />,
       title: "Phone",
       value: "+91 6383824086",
       description: "Call me during business hours"
     },
     {
-      icon: "📍",
+      icon: <MapPin className="w-6 h-6" />,
       title: "Location",
       value: "Chennai, Tamil Nadu",
       description: "Available for local meetings"
     },
     {
-      icon: "💬",
+      icon: <Clock className="w-6 h-6" />,
       title: "Response Time",
       value: "< 24 hours",
       description: "I'll get back to you quickly"
@@ -87,10 +88,10 @@ const Contact = () => {
   ];
 
   const socialLinks = [
-    { name: "LinkedIn", url: "#", icon: "💼", color: "#0077B5" },
-    { name: "GitHub", url: "#", icon: "💻", color: "#181717" },
-    { name: "Twitter", url: "#", icon: "🐦", color: "#1DA1F2" },
-    { name: "Instagram", url: "#", icon: "📸", color: "#E4405F" }
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/sanjayr005/", icon: <Linkedin className="w-5 h-5" />, color: "#0077B5" },
+    { name: "GitHub", url: "https://github.com/Sjking2025/", icon: <Github className="w-5 h-5" />, color: "#181717" },
+    { name: "Twitter", url: "#", icon: <Twitter className="w-5 h-5" />, color: "#1DA1F2" },
+    { name: "Instagram", url: "#", icon: <Instagram className="w-5 h-5" />, color: "#E4405F" }
   ];
 
   return (
@@ -200,7 +201,7 @@ const Contact = () => {
                     ) : (
                       <>
                         <span>Send Message</span>
-                        <span>🚀</span>
+                        <Send className="w-5 h-5" />
                       </>
                     )}
                   </motion.button>
@@ -213,9 +214,9 @@ const Contact = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
-                      className="mt-6 p-4 bg-green-500/20 border border-green-500/30 rounded-xl text-green-400 text-center"
+                      className="mt-6 p-4 bg-green-500/20 border border-green-500/30 rounded-xl text-green-400 text-center flex items-center justify-center gap-2"
                     >
-                      ✅ Message sent successfully! I'll get back to you soon.
+                      <CheckCircle className="w-5 h-5" /> Message sent successfully! I'll get back to you soon.
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -227,9 +228,9 @@ const Contact = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
-                      className="mt-6 p-4 bg-red-500/20 border border-red-500/30 rounded-xl text-red-400 text-center"
+                      className="mt-6 p-4 bg-red-500/20 border border-red-500/30 rounded-xl text-red-400 text-center flex items-center justify-center gap-2"
                     >
-                      ❌ {error}
+                      <XCircle className="w-5 h-5" /> {error}
                     </motion.div>
                   )}
                 </AnimatePresence>
