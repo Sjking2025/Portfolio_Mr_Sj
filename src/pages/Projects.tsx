@@ -45,6 +45,46 @@ const Projects = () => {
       technologies: ["React", "Three.js", "React Three Fiber", "Framer Motion"],
       liveUrl: "#",
       githubUrl: "https://github.com/Sjking2025/Lift_Simulator_3D"
+    },
+    {
+      id: 5,
+      title: "HR Recruitment Chatbot",
+      description: "AI-powered HR Management Chatbot that helps with recruitment, candidate screening, and job application tracking with intelligent responses.",
+      image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&auto=format&fit=crop&q=60",
+      category: "ai",
+      technologies: ["Python", "NLP", "React", "FastAPI"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/Sjking2025/HR-Recruitment-Chatbot"
+    },
+    {
+      id: 6,
+      title: "Resume Builder & Analyzer Pro",
+      description: "AI-powered resume builder with parsing capabilities, ATS compatibility checker, and intelligent suggestions for resume optimization.",
+      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&auto=format&fit=crop&q=60",
+      category: "ai",
+      technologies: ["Python", "React", "AI/ML", "PDF Generation"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/Sjking2025/Resume-Builder-Parser-Analyzer-Pro"
+    },
+    {
+      id: 7,
+      title: "AI-Driven Learning Platform",
+      description: "Personalized incremental learning platform powered by AI that adapts to user's learning pace and provides customized educational content.",
+      image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&auto=format&fit=crop&q=60",
+      category: "ai",
+      technologies: ["React", "Python", "TensorFlow", "MongoDB"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/Sjking2025/AI-Driven-Incremental-Learning-Platform"
+    },
+    {
+      id: 8,
+      title: "E-Commerce Platform",
+      description: "Full-featured e-commerce platform with product catalog, shopping cart, user authentication, and payment integration built with React.",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&auto=format&fit=crop&q=60",
+      category: "fullstack",
+      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/Sjking2025/Ecommerce_platform_reactjs"
     }
   ];
 
@@ -52,6 +92,7 @@ const Projects = () => {
     { id: 'all', name: 'All Projects' },
     { id: 'fullstack', name: 'Full Stack' },
     { id: 'frontend', name: 'Front End' },
+    { id: 'ai', name: 'AI / ML' },
     { id: '3d', name: '3D / Graphics' }
   ];
 
