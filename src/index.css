@@ -153,7 +153,7 @@ html.lenis body {
   white-space: nowrap;
 }
 
-/* Reduced motion */
+/* Reduced motion - respect user preferences */
 @media (prefers-reduced-motion: reduce) {
 
   *,
@@ -163,5 +163,42 @@ html.lenis body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .glass-effect {
+    backdrop-filter: none !important;
+  }
+}
+
+/* Low-end device optimizations */
+body.low-end-device {
+  .glass-effect {
+    backdrop-filter: none;
+    background: rgba(15, 15, 35, 0.9);
+  }
+
+  * {
+    cursor: auto !important;
+  }
+}
+
+/* Mobile optimizations */
+body.is-mobile {
+  * {
+    cursor: auto !important;
+  }
+}
+
+/* GPU-heavy effect optimizations */
+@media (max-width: 768px) {
+  .glass-effect {
+    backdrop-filter: blur(8px);
+    /* Reduced blur on mobile */
+  }
+
+  .gradient-text {
+    /* Fallback to solid color on very slow devices */
+    background: hsl(var(--primary));
+    -webkit-background-clip: text;
   }
 }

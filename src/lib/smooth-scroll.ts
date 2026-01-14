@@ -1,28 +1,39 @@
-// Smooth scrolling setup with Lenis
+// Smooth scrolling setup with Lenis - Performance optimized
 import Lenis from '@studio-freight/lenis';
+import { getAnimationSettings, getPerformanceProfile } from './performance';
 
 let lenisInstance: Lenis | null = null;
+let rafId: number | null = null;
 
-export const initSmoothScroll = (): Lenis => {
+export const initSmoothScroll = (): Lenis | null => {
     if (lenisInstance) return lenisInstance;
 
+    const settings = getAnimationSettings();
+    const profile = getPerformanceProfile();
+
+    // Skip smooth scrolling if disabled or reduced motion preferred
+    if (!settings.enableSmoothScroll || profile.prefersReducedMotion) {
+        console.log('[Performance] Smooth scrolling disabled for better performance');
+        return null;
+    }
+
     lenisInstance = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth easing
+        duration: settings.scrollDuration,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: 'vertical',
         gestureOrientation: 'vertical',
         smoothWheel: true,
-        wheelMultiplier: 1,
+        wheelMultiplier: profile.isLowEnd ? 1.5 : 1, // Faster scroll on low-end
         touchMultiplier: 2,
     });
 
-    // Animation frame loop
+    // Animation frame loop with cleanup support
     function raf(time: number) {
         lenisInstance?.raf(time);
-        requestAnimationFrame(raf);
+        rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     return lenisInstance;
 };
@@ -46,6 +57,10 @@ export const startScroll = () => {
 };
 
 export const destroySmoothScroll = () => {
+    if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+    }
     lenisInstance?.destroy();
     lenisInstance = null;
 };

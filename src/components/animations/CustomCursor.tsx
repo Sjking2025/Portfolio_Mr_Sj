@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { getAnimationSettings } from '@/lib/performance';
 
 interface CustomCursorProps {
     // Optional customization
@@ -15,6 +16,7 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
     const [isVisible, setIsVisible] = useState(false);
     const [cursorVariant, setCursorVariant] = useState<'default' | 'hover' | 'click' | 'text'>('default');
     const [cursorText, setCursorText] = useState('');
+    const [isEnabled, setIsEnabled] = useState(false);
 
     // Mouse position with spring for smooth following
     const mouseX = useMotionValue(0);
@@ -25,9 +27,16 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
     const cursorY = useSpring(mouseY, springConfig);
 
     useEffect(() => {
-        // Check if device supports hover (not touch)
+        // Check performance and hover support
+        const settings = getAnimationSettings();
         const hasHover = window.matchMedia('(hover: hover)').matches;
-        if (!hasHover) return;
+
+        if (!hasHover || !settings.enableCursor) {
+            setIsEnabled(false);
+            return;
+        }
+
+        setIsEnabled(true);
 
         const moveCursor = (e: MouseEvent) => {
             mouseX.set(e.clientX);
@@ -120,8 +129,8 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
         },
     };
 
-    // Don't render on mobile/touch devices
-    if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches) {
+    // Don't render on mobile/touch devices or if disabled for performance
+    if (!isEnabled) {
         return null;
     }
 

@@ -18,12 +18,14 @@ import Articles from "./pages/Articles";
 import Profiles from "./pages/Profiles";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import { applyPerformanceMode } from "@/lib/performance";
 
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  // Initialize smooth scrolling
+  // Initialize smooth scrolling and performance mode
   useEffect(() => {
+    applyPerformanceMode(); // Add CSS classes for low-end devices
     initSmoothScroll();
     return () => destroySmoothScroll();
   }, []);
