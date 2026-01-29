@@ -20,7 +20,7 @@ const Contact = () => {
 
   // Web3Forms API integration
   // Get your free access key from: https://web3forms.com/
-  const WEB3FORMS_ACCESS_KEY = "17002730-cf21-4075-8e92-a3a6678d28d7";
+  const WEB3FORMS_ACCESS_KEY = "512c6a71-ccd7-4d84-aa23-63442b890a14";
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
