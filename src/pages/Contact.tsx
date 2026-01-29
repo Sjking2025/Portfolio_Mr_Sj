@@ -360,28 +360,47 @@ const Contact = () => {
                 })}
               </div>
 
-              {/* Social links */}
+              {/* Social links - Premium Design */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 }}
-                className="glass-effect p-6 rounded-2xl space-y-4"
+                className="glass-effect p-8 rounded-2xl space-y-6"
               >
-                <h4 className="font-semibold text-center">Follow me on social media</h4>
-                <div className="flex justify-center space-x-4">
+                <div className="text-center space-y-2">
+                  <h4 className="text-xl font-bold gradient-text">Connect With Me</h4>
+                  <p className="text-sm text-muted-foreground">Let's build something amazing together</p>
+                </div>
+
+                <div className="flex justify-center gap-5">
                   {socialLinks.map((social, index) => (
                     <motion.a
                       key={social.name}
                       href={social.url}
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 1.2 + index * 0.1 }}
-                      whileHover={{ scale: 1.2, y: -5 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="w-12 h-12 rounded-full flex items-center justify-center text-xl hover:shadow-lg transition-all duration-300"
-                      style={{ backgroundColor: `${social.color}20`, color: social.color }}
+                      whileHover={{ scale: 1.15, y: -5 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="group relative w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300"
+                      style={{
+                        backgroundColor: social.color === '#181717' ? '#ffffff' : social.color,
+                        color: social.color === '#181717' ? '#181717' : '#ffffff',
+                        boxShadow: `0 4px 15px ${social.color}40`
+                      }}
                     >
-                      {social.icon}
+                      <span className="transition-transform duration-300 group-hover:scale-110">
+                        {social.icon}
+                      </span>
+
+                      {/* Platform name tooltip */}
+                      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+                        <span className="text-xs font-medium text-muted-foreground whitespace-nowrap">
+                          {social.name}
+                        </span>
+                      </div>
                     </motion.a>
                   ))}
                 </div>

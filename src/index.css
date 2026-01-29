@@ -162,10 +162,10 @@ All colors MUST be HSL.
   width: 250%;
 }
 
-/* Handshake Button - For Lottie animation */
+/* Handshake Button - Fixed width to prevent layout shift */
 .handshake-btn {
   padding: 1em 2em;
-  min-width: 240px;
+  width: 280px;
   min-height: 56px;
   border: none;
   border-radius: 5px;
@@ -175,9 +175,10 @@ All colors MUST be HSL.
   cursor: pointer;
   color: hsl(var(--primary-foreground));
   background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.8));
-  transition: all 300ms ease;
+  transition: transform 300ms ease, box-shadow 300ms ease;
   font-size: 15px;
   box-shadow: 0 4px 20px hsl(var(--primary) / 0.4);
+  justify-content: center;
 }
 
 .handshake-btn:hover {
