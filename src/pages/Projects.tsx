@@ -150,6 +150,7 @@ const Projects = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ y: -10, scale: 1.02 }}
                   className="glass-effect rounded-3xl overflow-hidden group cursor-pointer"
+                  data-cursor="view"
                 >
                   {/* Project image */}
                   <div className="relative h-48 overflow-hidden">
