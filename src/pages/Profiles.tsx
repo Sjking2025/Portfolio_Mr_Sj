@@ -1,52 +1,53 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Github, Brain, Linkedin, Palette, PenTool, FolderGit2, Puzzle, GitCommitHorizontal, Globe } from 'lucide-react';
 
 const Profiles = () => {
   const profiles = [
     {
       name: "GitHub",
       description: "Check out my open source contributions and personal projects",
-      stats: "150+ repositories • 500+ contributions",
-      icon: "💻",
-      url: "https://github.com",
+      stats: "28 repositories • 164 commits • Since Nov 2023",
+      icon: <Github className="w-10 h-10" />,
+      url: "https://github.com/Sjking2025/",
       color: "#181717",
       bgGradient: "from-gray-900 to-gray-700"
     },
     {
       name: "LeetCode",
-      description: "Algorithmic problem solving and competitive programming",
-      stats: "300+ problems solved • Top 15%",
-      icon: "🧠",
-      url: "https://leetcode.com",
+      description: "100 problems solved • 50 Days Badge 2025",
+      stats: "Easy: 41 • Medium: 42 • Hard: 17",
+      icon: <Brain className="w-10 h-10" />,
+      url: "https://leetcode.com/u/Nzby4lhnVC/",
       color: "#FFA116",
       bgGradient: "from-orange-600 to-yellow-500"
     },
     {
       name: "LinkedIn",
-      description: "Professional network and career achievements",
-      stats: "1000+ connections • Tech Industry",
-      icon: "💼",
-      url: "https://linkedin.com",
+      description: "SDE | UI & UX | Final-Year @ UCET • RKS INFOTECH",
+      stats: "196 connections • 238 followers • 25K+ impressions • 9.4K+ reach",
+      icon: <Linkedin className="w-10 h-10" />,
+      url: "https://www.linkedin.com/in/sanjayr005/",
       color: "#0077B5",
       bgGradient: "from-blue-600 to-blue-800"
     },
 
     {
-      name: "CodePen",
-      description: "Creative coding experiments and frontend demos",
-      stats: "50+ pens • 1k+ hearts",
-      icon: "🎨",
-      url: "https://codepen.io",
-      color: "#47CF73",
-      bgGradient: "from-green-500 to-teal-500"
+      name: "GeeksForGeeks",
+      description: "69 problems solved • 280 coding score • 57 POTDs",
+      stats: "Basic: 6 • Easy: 9 • Medium: 44 • Hard: 10",
+      icon: <Palette className="w-10 h-10" />,
+      url: "https://www.geeksforgeeks.org/profile/sanjayb7pk",
+      color: "#2F8D46",
+      bgGradient: "from-green-600 to-green-800"
     },
-  
+
     {
       name: "Dev.to",
       description: "Technical articles and programming tutorials",
-      stats: "25+ articles • 10k+ views",
-      icon: "✍️",
+      stats: "Coming soon",
+      icon: <PenTool className="w-10 h-10" />,
       url: "https://dev.to",
       color: "#0A0A0A",
       bgGradient: "from-gray-800 to-black"
@@ -73,7 +74,7 @@ const Profiles = () => {
           </div>
 
           {/* Profiles grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
             {profiles.map((profile, index) => (
               <motion.a
                 key={profile.name}
@@ -83,8 +84,8 @@ const Profiles = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ 
-                  scale: 1.05, 
+                whileHover={{
+                  scale: 1.05,
                   y: -10,
                   boxShadow: `0 20px 40px ${profile.color}30`
                 }}
@@ -93,12 +94,12 @@ const Profiles = () => {
               >
                 {/* Background gradient */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${profile.bgGradient} opacity-5 group-hover:opacity-10 transition-opacity`}></div>
-                
+
                 {/* Content */}
                 <div className="relative space-y-4">
                   {/* Icon and name */}
                   <div className="flex items-center space-x-4">
-                    <motion.div 
+                    <motion.div
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.5 }}
                       className="text-4xl"
@@ -112,19 +113,19 @@ const Profiles = () => {
                       <div className="w-0 group-hover:w-full h-0.5 bg-primary transition-all duration-300"></div>
                     </div>
                   </div>
-                  
+
                   {/* Description */}
                   <p className="text-muted-foreground leading-relaxed">
                     {profile.description}
                   </p>
-                  
+
                   {/* Stats */}
                   <div className="pt-2">
-                    <p className="text-sm font-medium" style={{ color: profile.color }}>
+                    <p className="text-sm font-medium text-primary">
                       {profile.stats}
                     </p>
                   </div>
-                  
+
                   {/* Hover arrow */}
                   <motion.div
                     initial={{ x: -10, opacity: 0 }}
@@ -138,14 +139,14 @@ const Profiles = () => {
 
                 {/* Decorative elements */}
                 <motion.div
-                  animate={{ 
+                  animate={{
                     rotate: [0, 360],
                     scale: [1, 1.1, 1]
                   }}
-                  transition={{ 
-                    duration: 20, 
-                    repeat: Infinity, 
-                    ease: "linear" 
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear"
                   }}
                   className="absolute -top-2 -right-2 w-16 h-16 rounded-full opacity-20"
                   style={{ backgroundColor: profile.color }}
@@ -164,19 +165,19 @@ const Profiles = () => {
             <h3 className="text-2xl font-bold text-center mb-8">Overall Stats</h3>
             <div className="grid md:grid-cols-4 gap-8">
               {[
-                { label: "Total Repositories", value: "10+", icon: "📁" },
-                { label: "Problems Solved", value: "100+", icon: "🧩" },
-                { label: "Contributions", value: "50+", icon: "📊" },
-                { label: "Community Reach", value: "2k+", icon: "🌍" }
+                { label: "Total Repositories", value: "28+", icon: <FolderGit2 className="w-8 h-8" /> },
+                { label: "Problems Solved", value: "169+", icon: <Puzzle className="w-8 h-8" /> },
+                { label: "Contributions", value: "164+", icon: <GitCommitHorizontal className="w-8 h-8" /> },
+                { label: "Community Reach", value: "9.4k+", icon: <Globe className="w-8 h-8" /> }
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 1 + index * 0.1 }}
-                  className="text-center space-y-2"
+                  className="text-center space-y-3 flex flex-col items-center"
                 >
-                  <div className="text-3xl">{stat.icon}</div>
+                  <div className="flex items-center justify-center w-12 h-12 text-primary">{stat.icon}</div>
                   <div className="text-2xl font-bold gradient-text">{stat.value}</div>
                   <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </motion.div>

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Home, User, Rocket, Zap, FileText, Code2, Mail } from 'lucide-react';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,13 +10,13 @@ const Navigation = () => {
   const navigate = useNavigate();
 
   const navItems = [
-    { name: 'Home', path: '/', icon: '🏠' },
-    { name: 'About', path: '/about', icon: '👨‍💻' },
-    { name: 'Projects', path: '/projects', icon: '🚀' },
-    { name: 'Skills', path: '/skills', icon: '⚡' },
-    { name: 'Articles', path: '/articles', icon: '📝' },
-    { name: 'Profiles', path: '/profiles', icon: '💻' },
-    { name: 'Contact', path: '/contact', icon: '📧' },
+    { name: 'Home', path: '/', icon: <Home size={18} /> },
+    { name: 'About', path: '/about', icon: <User size={18} /> },
+    { name: 'Projects', path: '/projects', icon: <Rocket size={18} /> },
+    { name: 'Skills', path: '/skills', icon: <Zap size={18} /> },
+    { name: 'Articles', path: '/articles', icon: <FileText size={18} /> },
+    { name: 'Profiles', path: '/profiles', icon: <Code2 size={18} /> },
+    { name: 'Contact', path: '/contact', icon: <Mail size={18} /> },
   ];
 
   const handleNavigation = (path: string) => {
@@ -40,7 +41,7 @@ const Navigation = () => {
             >
               Portfolio
             </motion.div>
-            
+
             <div className="flex space-x-1">
               {navItems.map((item) => (
                 <motion.button
@@ -48,13 +49,12 @@ const Navigation = () => {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleNavigation(item.path)}
-                  className={`px-4 py-2 rounded-xl transition-all duration-300 ${
-                    location.pathname === item.path
-                      ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
-                      : 'hover:bg-white/10 text-muted-foreground hover:text-foreground'
-                  }`}
+                  className={`px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2 ${location.pathname === item.path
+                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
+                    : 'hover:bg-white/10 text-muted-foreground hover:text-foreground'
+                    }`}
                 >
-                  <span className="mr-2">{item.icon}</span>
+                  {item.icon}
                   {item.name}
                 </motion.button>
               ))}
@@ -78,7 +78,7 @@ const Navigation = () => {
             >
               Portfolio
             </motion.div>
-            
+
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsOpen(!isOpen)}
@@ -131,13 +131,12 @@ const Navigation = () => {
                     whileHover={{ scale: 1.05, x: 10 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => handleNavigation(item.path)}
-                    className={`w-full text-left p-4 rounded-xl transition-all duration-300 flex items-center space-x-3 ${
-                      location.pathname === item.path
-                        ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
-                        : 'hover:bg-white/10 text-muted-foreground hover:text-foreground'
-                    }`}
+                    className={`w-full text-left p-4 rounded-xl transition-all duration-300 flex items-center gap-3 ${location.pathname === item.path
+                      ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
+                      : 'hover:bg-white/10 text-muted-foreground hover:text-foreground'
+                      }`}
                   >
-                    <span className="text-2xl">{item.icon}</span>
+                    <span className="[&>svg]:w-6 [&>svg]:h-6">{item.icon}</span>
                     <span className="text-lg font-medium">{item.name}</span>
                   </motion.button>
                 ))}

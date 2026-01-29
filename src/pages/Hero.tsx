@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import ThreeScene from '../components/ThreeScene';
+import { FileDown } from 'lucide-react';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const Hero = () => {
               <h1 className="text-5xl md:text-7xl font-bold leading-tight">
                 <span className="block">Hi, I'm</span>
                 <span className="block gradient-text ">
-                  SANJAY 
+                  SANJAY
                 </span>
               </h1>
             </motion.div>
@@ -70,7 +71,7 @@ const Hero = () => {
               >
                 Let's Work Together
               </motion.button>
-              
+
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -79,6 +80,31 @@ const Hero = () => {
               >
                 View My Work
               </motion.button>
+            </motion.div>
+
+            {/* Resume Buttons */}
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
+              <motion.a
+                href="/resume.pdf"
+                download="SANJAY_R_Resume.pdf"
+                whileHover={{ scale: 1.05, boxShadow: '0 15px 30px rgba(0, 217, 255, 0.3)' }}
+                whileTap={{ scale: 0.95 }}
+                className="px-6 py-3 bg-gradient-to-r from-cyber-blue to-primary text-white rounded-xl font-semibold flex items-center gap-2 shadow-lg transition-all duration-300"
+              >
+                <FileDown className="w-5 h-5" /> Download Resume
+              </motion.a>
+
+              <motion.a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-6 py-3 glass-effect rounded-xl font-semibold flex items-center gap-2 hover:bg-cyber-blue/20 hover:border-cyber-blue/50 transition-all duration-300"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
+                Preview Resume
+              </motion.a>
             </motion.div>
 
             {/* Stats */}
@@ -94,7 +120,7 @@ const Hero = () => {
                 </motion.div>
                 <p className="text-muted-foreground">Projects</p>
               </div>
-              
+
               <div className="text-center">
                 <motion.div
                   initial={{ scale: 0 }}

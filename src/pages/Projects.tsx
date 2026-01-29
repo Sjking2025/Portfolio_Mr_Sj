@@ -8,66 +8,83 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: "Unique To-Do App",
-      description: "A unique take on the classic to-do app with advanced features and a sleek design",
-      image: "https://media.istockphoto.com/id/2214686927/photo/checklist-clipboard-with-chat-icon-to-do-list-goal-achievement-concept-3d-illustration.webp?a=1&b=1&s=612x612&w=0&k=20&c=k268W4TThNJyKWp2FKRe6-nR3KQYPzhpDRS5GeWwOts=",
+      title: "MERN Unique Todo App",
+      description: "A modern, full-stack To-Do application built with the MERN stack featuring a unique design, real-time updates, and seamless user experience.",
+      image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&auto=format&fit=crop&q=60",
       category: "fullstack",
-      technologies: ["React", "Node.js", "Express", "MongoDB"],
+      technologies: ["MongoDB", "Express.js", "React", "Node.js"],
       liveUrl: "#",
-      githubUrl: "#"
-    }
-    ,
+      githubUrl: "https://github.com/Sjking2025/MERN-UNIQUETODO-APP"
+    },
     {
       id: 2,
-      title: "Weather App",
-      description: "Real-time weather application with interactive UI and global coverage",
-      image: "https://images.unsplash.com/photo-1705077296278-d82dd5c8662f?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHdlYXRoZXIlMjBhcHB8ZW58MHx8MHx8fDA%3D",
+      title: "React Weather App",
+      description: "Real-time weather application with interactive UI, location-based forecasts, and global weather coverage using OpenWeatherMap API.",
+      image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&auto=format&fit=crop&q=60",
       category: "frontend",
-      technologies: ["React", "TypeScript", "OpenWeatherMap API"],
+      technologies: ["React", "JavaScript", "CSS", "OpenWeatherMap API"],
       liveUrl: "#",
-      githubUrl: "#"
+      githubUrl: "https://github.com/Sjking2025/React_Weather_App"
     },
-    
     {
       id: 3,
-      title: "E-Commerce Platform",
-      description: "Full-stack e-commerce solution with React, Node.js, and MongoDB",
-      image: "https://plus.unsplash.com/premium_photo-1684179639963-e141ce2f8074?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "fullstack",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+      title: "Kanban Board",
+      description: "Modern Kanban board with drag & drop functionality, multiple themes, and local storage. Built with vanilla JavaScript for seamless task management.",
+      image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&auto=format&fit=crop&q=60",
+      category: "frontend",
+      technologies: ["JavaScript", "HTML5", "CSS3", "Drag & Drop API"],
       liveUrl: "#",
-      githubUrl: "#"
+      githubUrl: "https://github.com/Sjking2025/kanban-board"
     },
     {
       id: 4,
-      title: "AI Dashboard",
-      description: "Modern dashboard with AI-powered analytics and real-time data",
-      image: "https://media.istockphoto.com/id/1979289147/photo/data-analysis-science-and-big-data-with-ai-technology-analyst-or-scientist-uses-a-computer.jpg?s=1024x1024&w=is&k=20&c=WqGfiIeod3kNA5XFFRRa0w5uhoL3c2PfxoWYNXfvl68=",
-      category: "frontend",
-      technologies: ["React", "TypeScript", "D3.js", "TensorFlow.js"],
+      title: "Lift Simulator 3D",
+      description: "Interactive 3D elevator simulator implementing the SCAN disk scheduling algorithm. Features realistic physics, floor animations, and activity logging.",
+      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop&q=60",
+      category: "3d",
+      technologies: ["React", "Three.js", "React Three Fiber", "Framer Motion"],
       liveUrl: "#",
-      githubUrl: "#"
+      githubUrl: "https://github.com/Sjking2025/Lift_Simulator_3D"
     },
-    
     {
       id: 5,
-      title: "Smart Home IoT System",
-      description: "IoT platform for smart home automation and monitoring",
-      image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334",
-      category: "iot",
-      technologies: ["Python", "React", "AWS IoT", "MQTT"],
+      title: "HR Recruitment Chatbot",
+      description: "AI-powered HR Management Chatbot that helps with recruitment, candidate screening, and job application tracking with intelligent responses.",
+      image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&auto=format&fit=crop&q=60",
+      category: "ai",
+      technologies: ["Python", "NLP", "React", "FastAPI"],
       liveUrl: "#",
-      githubUrl: "#"
+      githubUrl: "https://github.com/Sjking2025/HR-Recruitment-Chatbot"
     },
     {
       id: 6,
-      title: "Social Media Analytics",
-      description: "Advanced analytics platform for social media insights",
-      image: "https://media.istockphoto.com/id/1465545513/photo/chatbot.jpg?s=2048x2048&w=is&k=20&c=cSb5mc4E9ga6EDTMxwxoC5tYHBihId6Isc8OiK_Vgz8=",
-      category: "fullstack",
-      technologies: ["Vue.js", "Python", "Django", "Chart.js"],
+      title: "Resume Builder & Analyzer Pro",
+      description: "AI-powered resume builder with parsing capabilities, ATS compatibility checker, and intelligent suggestions for resume optimization.",
+      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&auto=format&fit=crop&q=60",
+      category: "ai",
+      technologies: ["Python", "React", "AI/ML", "PDF Generation"],
       liveUrl: "#",
-      githubUrl: "#"
+      githubUrl: "https://github.com/Sjking2025/Resume-Builder-Parser-Analyzer-Pro"
+    },
+    {
+      id: 7,
+      title: "AI-Driven Learning Platform",
+      description: "Personalized incremental learning platform powered by AI that adapts to user's learning pace and provides customized educational content.",
+      image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&auto=format&fit=crop&q=60",
+      category: "ai",
+      technologies: ["React", "Python", "TensorFlow", "MongoDB"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/Sjking2025/AI-Driven-Incremental-Learning-Platform"
+    },
+    {
+      id: 8,
+      title: "E-Commerce Platform",
+      description: "Full-featured e-commerce platform with product catalog, shopping cart, user authentication, and payment integration built with React.",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&auto=format&fit=crop&q=60",
+      category: "fullstack",
+      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/Sjking2025/Ecommerce_platform_reactjs"
     }
   ];
 
@@ -75,11 +92,12 @@ const Projects = () => {
     { id: 'all', name: 'All Projects' },
     { id: 'fullstack', name: 'Full Stack' },
     { id: 'frontend', name: 'Front End' },
-
+    { id: 'ai', name: 'AI / ML' },
+    { id: '3d', name: '3D / Graphics' }
   ];
 
-  const filteredProjects = filter === 'all' 
-    ? projects 
+  const filteredProjects = filter === 'all'
+    ? projects
     : projects.filter(project => project.category === filter);
 
   return (
@@ -109,11 +127,10 @@ const Projects = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setFilter(category.id)}
-                className={`px-6 py-3 rounded-2xl font-medium transition-all duration-300 ${
-                  filter === category.id
-                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
-                    : 'glass-effect hover:bg-white/10 text-muted-foreground hover:text-foreground'
-                }`}
+                className={`px-6 py-3 rounded-2xl font-medium transition-all duration-300 ${filter === category.id
+                  ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
+                  : 'glass-effect hover:bg-white/10 text-muted-foreground hover:text-foreground'
+                  }`}
               >
                 {category.name}
               </motion.button>
@@ -144,7 +161,7 @@ const Projects = () => {
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
-                    
+
                     {/* Overlay buttons */}
                     <motion.div
                       initial={{ opacity: 0 }}
@@ -178,7 +195,7 @@ const Projects = () => {
                     <p className="text-muted-foreground text-sm leading-relaxed">
                       {project.description}
                     </p>
-                    
+
                     {/* Technologies */}
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.map((tech) => (

@@ -3,12 +3,26 @@ import React, { useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { Palette, Settings, Cloud, Wrench, Award } from 'lucide-react';
+
+// TypeScript interfaces
+interface Skill {
+  name: string;
+  level: number;
+  color: string;
+}
+
+interface SkillCategoryData {
+  category: string;
+  icon: React.ReactNode;
+  skills: Skill[];
+}
 
 const Skills = () => {
   const skills = [
     {
       category: "Frontend Development",
-      icon: "🎨",
+      icon: <Palette className="w-8 h-8 text-cyber-blue" />,
       skills: [
         { name: "React.js", level: 95, color: "#61DAFB" },
         { name: "TypeScript", level: 90, color: "#3178C6" },
@@ -18,7 +32,7 @@ const Skills = () => {
     },
     {
       category: "Backend Development",
-      icon: "⚙️",
+      icon: <Settings className="w-8 h-8 text-neon-green" />,
       skills: [
         { name: "Node.js", level: 92, color: "#339933" },
         { name: "Python", level: 88, color: "#3776AB" },
@@ -28,7 +42,7 @@ const Skills = () => {
     },
     {
       category: "Database & Cloud",
-      icon: "☁️",
+      icon: <Cloud className="w-8 h-8 text-cyber-purple" />,
       skills: [
         { name: "MongoDB", level: 87, color: "#47A248" },
         { name: "SQL", level: 83, color: "#FF9900" },
@@ -38,7 +52,7 @@ const Skills = () => {
     },
     {
       category: "Tools & Others",
-      icon: "🛠️",
+      icon: <Wrench className="w-8 h-8 text-electric-pink" />,
       skills: [
         { name: "Git", level: 95, color: "#F05032" },
         { name: "Canva", level: 82, color: "#8DD6F9" },
@@ -79,45 +93,162 @@ const Skills = () => {
           ))}
 
           {/* Certifications */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="space-y-8"
-          >
-            <h3 className="text-3xl font-bold text-center">Certifications & Awards</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                { title: "AWS Solutions Architect", issuer: "Amazon Web Services", year: "2023" },
-                { title: "Google Cloud Professional", issuer: "Google Cloud", year: "2023" },
-                { title: "React Developer Expert", issuer: "Meta", year: "2022" },
-                { title: "Full Stack Web Developer", issuer: "FreeCodeCamp", year: "2021" },
-                { title: "JavaScript Algorithms", issuer: "FreeCodeCamp", year: "2021" },
-                { title: "Responsive Web Design", issuer: "FreeCodeCamp", year: "2021" }
-              ].map((cert, index) => (
-                <motion.div
-                  key={cert.title}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.8 + index * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="glass-effect p-6 rounded-2xl space-y-3 hover-lift"
-                >
-                  <div className="text-2xl">🏆</div>
-                  <h4 className="font-semibold">{cert.title}</h4>
-                  <p className="text-sm text-muted-foreground">{cert.issuer}</p>
-                  <p className="text-xs text-primary font-medium">{cert.year}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+          <CertificationsSection />
         </motion.div>
       </div>
     </div>
   );
 };
 
-const SkillCategory = ({ category, index }: { category: any; index: number }) => {
+// Certificate interface
+interface Certificate {
+  title: string;
+  issuer: string;
+  year: string;
+  file: string;
+  thumbnail: string;
+}
+
+// Certifications Section Component with hover effects
+const CertificationsSection = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const certificates: Certificate[] = [
+    { title: "Google Cloud Data Analytics", issuer: "Naan Mudhalvan", year: "2024", file: "/certificates/Google_Cloud_Data_Analytics_NM_SANJAY R.pdf", thumbnail: "/certificates/Google_Cloud_Data_Analytics_NM_SANJAY R_page-0001.jpg" },
+    { title: "Google Cloud Engineering", issuer: "Naan Mudhalvan", year: "2024", file: "/certificates/Google_Cloud_Engineering_NM_SANJAY R.pdf", thumbnail: "/certificates/Google_Cloud_Engineering_NM_SANJAY R_page-0001.jpg" },
+    { title: "Salesforce Developer", issuer: "SmartBridge / Naan Mudhalvan", year: "2024", file: "/certificates/Salesforce_Developer_SmartBridge_NM_SANJAY R.pdf", thumbnail: "/certificates/Salesforce_Developer_SmartBridge_NM_SANJAY R_page-0001.jpg" },
+    { title: "Java Development", issuer: "Besant Technologies", year: "2024", file: "/certificates/SANJAY_R_Java_Besant_Technologies.png", thumbnail: "/certificates/SANJAY_R_Java_Besant_Technologies.png" },
+    { title: "Experience Based Project Learning", issuer: "Naan Mudhalvan", year: "2024", file: "/certificates/Experience Based Project Learning_NM_SANJAY R.pdf", thumbnail: "/certificates/Experience Based Project Learning_NM_SANJAY R_page-0001.jpg" },
+    { title: "Microsoft Office Essentials", issuer: "Naan Mudhalvan", year: "2024", file: "/certificates/Microsoft Office Essentials_NM_SANJAY R.pdf", thumbnail: "/certificates/Microsoft Office Essentials_NM_SANJAY R_page-0001.jpg" },
+    { title: "Young Turks 2025 - Round 1", issuer: "Naukri Campus", year: "2025", file: "/certificates/young_turks25_round_1_achievement.pdf", thumbnail: "/certificates/young_turks25_round_1_achievement_page-0001.jpg" },
+    { title: "CodeQuest Participation", issuer: "Naukri Campus", year: "2024", file: "/certificates/NaukriCampus_CodeQuest_Certificate_Participation.pdf", thumbnail: "/certificates/NaukriCampus_CodeQuest_Certificate_Participation_page-0001.jpg" },
+    { title: "BrandQuest Participation", issuer: "Naukri Campus", year: "2024", file: "/certificates/NaukriCampus_BrandQuest_Certificate_Participation.pdf", thumbnail: "/certificates/NaukriCampus_BrandQuest_Certificate_Participation_page-0001.jpg" }
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.6 }}
+      className="space-y-8"
+    >
+      <h3 className="text-3xl font-bold text-center">Certifications & Awards</h3>
+      <div
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        onMouseLeave={() => setHoveredIndex(null)}
+      >
+        {certificates.map((cert, index) => (
+          <motion.a
+            key={cert.title}
+            href={cert.file}
+            target="_blank"
+            rel="noopener noreferrer"
+            onMouseEnter={() => setHoveredIndex(index)}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{
+              opacity: hoveredIndex === null ? 1 : hoveredIndex === index ? 1 : 0.4,
+              scale: hoveredIndex === null ? 1 : hoveredIndex === index ? 1.1 : 0.95,
+              y: hoveredIndex === index ? -15 : 0,
+              filter: hoveredIndex === null ? 'blur(0px)' : hoveredIndex === index ? 'blur(0px)' : 'blur(2px)',
+              zIndex: hoveredIndex === index ? 10 : 1
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+              mass: 0.8
+            }}
+            className="glass-effect rounded-2xl overflow-hidden cursor-pointer group relative"
+            style={{ transformOrigin: 'center center' }}
+          >
+            {/* Glow effect on hover */}
+            <motion.div
+              animate={{
+                boxShadow: hoveredIndex === index
+                  ? '0 25px 50px -12px rgba(139, 92, 246, 0.5), 0 0 30px rgba(0, 217, 255, 0.3)'
+                  : '0 0 0 rgba(0,0,0,0)'
+              }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0 rounded-2xl pointer-events-none"
+            />
+
+            {/* Certificate Image Preview */}
+            <div className="h-40 relative overflow-hidden">
+              <motion.img
+                src={cert.thumbnail}
+                alt={cert.title}
+                className="w-full h-full object-cover"
+                animate={{
+                  scale: hoveredIndex === index ? 1.1 : 1,
+                  opacity: hoveredIndex === index ? 1 : 0.7
+                }}
+                transition={{ duration: 0.4 }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+
+              {/* View badge */}
+              <motion.div
+                className="absolute top-3 right-3 px-3 py-1.5 bg-primary/90 backdrop-blur-sm rounded-full text-xs font-semibold flex items-center gap-1"
+                animate={{
+                  scale: hoveredIndex === index ? 1.1 : 1,
+                  opacity: hoveredIndex === index ? 1 : 0.8
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
+                View
+              </motion.div>
+            </div>
+
+            {/* Certificate Info */}
+            <div className="p-5 space-y-3 relative">
+              <div className="flex items-start gap-3">
+                <motion.div
+                  className="text-2xl text-yellow-500"
+                  animate={{
+                    scale: hoveredIndex === index ? [1, 1.3, 1] : 1,
+                    rotate: hoveredIndex === index ? [0, -10, 10, 0] : 0
+                  }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Award size={24} />
+                </motion.div>
+                <div>
+                  <motion.h4
+                    className="font-bold text-base leading-tight"
+                    animate={{
+                      color: hoveredIndex === index ? '#8b5cf6' : '#ffffff'
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {cert.title}
+                  </motion.h4>
+                  <p className="text-sm text-muted-foreground mt-1">{cert.issuer}</p>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center pt-2 border-t border-white/10">
+                <span className="text-sm text-primary font-semibold">{cert.year}</span>
+                <motion.span
+                  className="text-sm font-medium flex items-center gap-1"
+                  animate={{
+                    x: hoveredIndex === index ? 5 : 0,
+                    color: hoveredIndex === index ? '#00d9ff' : '#888888'
+                  }}
+                  transition={{ duration: 0.2 }}
+                >
+                  Open Certificate →
+                </motion.span>
+              </div>
+            </div>
+          </motion.a>
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+
+
+const SkillCategory = ({ category, index }: { category: SkillCategoryData; index: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
@@ -135,7 +266,7 @@ const SkillCategory = ({ category, index }: { category: any; index: number }) =>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {category.skills.map((skill: any, skillIndex: number) => (
+        {category.skills.map((skill: Skill, skillIndex: number) => (
           <SkillBar
             key={skill.name}
             skill={skill}
@@ -148,7 +279,7 @@ const SkillCategory = ({ category, index }: { category: any; index: number }) =>
   );
 };
 
-const SkillBar = ({ skill, index, isInView }: { skill: any; index: number; isInView: boolean }) => {
+const SkillBar = ({ skill, index, isInView }: { skill: Skill; index: number; isInView: boolean }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -180,7 +311,7 @@ const SkillBar = ({ skill, index, isInView }: { skill: any; index: number; isInV
         <span className="font-medium">{skill.name}</span>
         <span className="text-sm text-primary font-semibold">{count}%</span>
       </div>
-      
+
       <div className="h-3 bg-muted rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
