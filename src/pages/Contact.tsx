@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { Mail, Phone, MapPin, Clock, Linkedin, Github, Twitter, Instagram, Send, CheckCircle, XCircle } from 'lucide-react';
@@ -15,6 +15,35 @@ const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState<string>('');
+  const [currentDate, setCurrentDate] = useState<string>('');
+
+  // Real-time IST clock
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const istTime = now.toLocaleTimeString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+      const istDate = now.toLocaleDateString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        weekday: 'long',
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      });
+      setCurrentTime(istTime);
+      setCurrentDate(istDate);
+    };
+
+    updateTime(); // Initial call
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
 
@@ -81,9 +110,9 @@ const Contact = () => {
     },
     {
       icon: <Clock className="w-6 h-6" />,
-      title: "Response Time",
-      value: "< 24 hours",
-      description: "I'll get back to you quickly"
+      title: "Local Time (IST)",
+      value: currentTime || "Loading...",
+      description: currentDate || "India Standard Time"
     }
   ];
 
@@ -246,23 +275,89 @@ const Contact = () => {
             >
               {/* Contact methods */}
               <div className="space-y-6">
-                {contactMethods.map((method, index) => (
-                  <motion.div
-                    key={method.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 + index * 0.1 }}
-                    whileHover={{ scale: 1.02, x: 10 }}
-                    className="glass-effect p-6 rounded-2xl flex items-center space-x-4 hover-lift"
-                  >
-                    <div className="text-3xl">{method.icon}</div>
-                    <div>
-                      <h4 className="font-semibold">{method.title}</h4>
-                      <p className="text-primary font-medium">{method.value}</p>
-                      <p className="text-sm text-muted-foreground">{method.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
+                {contactMethods.map((method, index) => {
+                  const isClockCard = method.title === "Local Time (IST)";
+
+                  return isClockCard ? (
+                    /* Special highlighted IST Clock card */
+                    <motion.div
+                      key={method.title}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 + index * 0.1 }}
+                      className="relative p-[2px] rounded-2xl overflow-hidden"
+                      style={{
+                        background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)))'
+                      }}
+                    >
+                      {/* Animated gradient border glow */}
+                      <motion.div
+                        className="absolute inset-0 rounded-2xl opacity-50"
+                        animate={{
+                          boxShadow: [
+                            '0 0 20px hsl(var(--primary) / 0.5)',
+                            '0 0 40px hsl(var(--primary) / 0.8)',
+                            '0 0 20px hsl(var(--primary) / 0.5)'
+                          ]
+                        }}
+                        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                      />
+
+                      <div className="relative glass-effect p-6 rounded-2xl bg-background/95">
+                        <div className="flex items-center space-x-4">
+                          {/* Pulsing clock icon */}
+                          <motion.div
+                            className="relative"
+                            animate={{ scale: [1, 1.1, 1] }}
+                            transition={{ duration: 1, repeat: Infinity }}
+                          >
+                            <div className="absolute inset-0 rounded-full bg-primary/30 blur-md"></div>
+                            <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white">
+                              {method.icon}
+                            </div>
+                          </motion.div>
+
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <h4 className="font-semibold text-primary">{method.title}</h4>
+                              <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                              </span>
+                            </div>
+                            {/* Large animated time display */}
+                            <motion.p
+                              key={currentTime}
+                              initial={{ opacity: 0.5 }}
+                              animate={{ opacity: 1 }}
+                              className="text-2xl font-bold gradient-text tracking-wider font-mono"
+                            >
+                              {method.value}
+                            </motion.p>
+                            <p className="text-sm text-muted-foreground">{method.description}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    /* Regular contact cards */
+                    <motion.div
+                      key={method.title}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 + index * 0.1 }}
+                      whileHover={{ scale: 1.02, x: 10 }}
+                      className="glass-effect p-6 rounded-2xl flex items-center space-x-4 hover-lift"
+                    >
+                      <div className="text-3xl">{method.icon}</div>
+                      <div>
+                        <h4 className="font-semibold">{method.title}</h4>
+                        <p className="text-primary font-medium">{method.value}</p>
+                        <p className="text-sm text-muted-foreground">{method.description}</p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
 
               {/* Social links */}
