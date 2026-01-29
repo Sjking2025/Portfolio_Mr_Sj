@@ -1,12 +1,13 @@
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import ThreeScene from '../components/ThreeScene';
-import { FileDown } from 'lucide-react';
+import { FileDown, Handshake } from 'lucide-react';
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
 
   const textVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -64,12 +65,29 @@ const Hero = () => {
 
             <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(139, 92, 246, 0.3)' }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate('/contact')}
-                className="px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-semibold text-lg shadow-lg shadow-primary/25 hover:shadow-primary/50 transition-all duration-300"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                className="handshake-btn relative overflow-hidden flex items-center gap-3"
               >
-                Let's Work Together
+                {/* Button Text */}
+                <span>Let's Work Together</span>
+
+                {/* Handshake Icon on Right */}
+                <AnimatePresence>
+                  {isHovered && (
+                    <motion.div
+                      initial={{ scale: 0, rotate: 45 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0, rotate: -45 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.1 }}
+                    >
+                      <Handshake className="w-6 h-6" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.button>
 
               <motion.button
