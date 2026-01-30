@@ -17,6 +17,7 @@ const Contact = () => {
   const [error, setError] = useState<string | null>(null);
   const [currentTime, setCurrentTime] = useState<string>('');
   const [currentDate, setCurrentDate] = useState<string>('');
+  const [isOrbitActive, setIsOrbitActive] = useState(false);
 
   // Real-time IST clock
   useEffect(() => {
@@ -120,7 +121,7 @@ const Contact = () => {
     { name: "LinkedIn", url: "https://www.linkedin.com/in/sanjayr005/", icon: <Linkedin className="w-5 h-5" />, color: "#0077B5" },
     { name: "GitHub", url: "https://github.com/Sjking2025/", icon: <Github className="w-5 h-5" />, color: "#181717" },
     { name: "Twitter", url: "#", icon: <Twitter className="w-5 h-5" />, color: "#1DA1F2" },
-    { name: "Instagram", url: "#", icon: <Instagram className="w-5 h-5" />, color: "#E4405F" }
+    { name: "Instagram", url: "https://www.instagram.com/itz_me_sj20/", icon: <Instagram className="w-5 h-5" />, color: "#E4405F" }
   ];
 
   return (
@@ -360,50 +361,104 @@ const Contact = () => {
                 })}
               </div>
 
-              {/* Social links - Premium Design */}
+              {/* Social links - Solar System Orbit Animation */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 }}
-                className="glass-effect p-8 rounded-2xl space-y-6"
+                className="glass-effect p-8 rounded-2xl"
               >
-                <div className="text-center space-y-2">
-                  <h4 className="text-xl font-bold gradient-text">Connect With Me</h4>
-                  <p className="text-sm text-muted-foreground">Let's build something amazing together</p>
-                </div>
-
-                <div className="flex justify-center gap-5">
-                  {socialLinks.map((social, index) => (
-                    <motion.a
-                      key={social.name}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.2 + index * 0.1 }}
-                      whileHover={{ scale: 1.15, y: -5 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="group relative w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300"
-                      style={{
-                        backgroundColor: social.color === '#181717' ? '#ffffff' : social.color,
-                        color: social.color === '#181717' ? '#181717' : '#ffffff',
-                        boxShadow: `0 4px 15px ${social.color}40`
+                <div
+                  className="relative h-72 flex items-center justify-center group/orbit"
+                  onMouseEnter={() => setIsOrbitActive(true)}
+                  onMouseLeave={() => setIsOrbitActive(false)}
+                >
+                  {/* Central Element - The Sun */}
+                  <motion.div
+                    className="absolute z-10 w-28 h-28 rounded-full flex items-center justify-center cursor-pointer"
+                    animate={{
+                      background: isOrbitActive
+                        ? 'radial-gradient(circle, #FFD700 0%, #FFA500 50%, #FF6B00 100%)'
+                        : 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))',
+                      boxShadow: isOrbitActive
+                        ? '0 0 60px #FFD700, 0 0 100px #FFA50080, 0 0 140px #FF6B0040'
+                        : '0 8px 30px hsl(var(--primary) / 0.3)',
+                      scale: isOrbitActive ? 1.1 : 1,
+                    }}
+                    transition={{ duration: 0.5 }}
+                    whileHover={{ scale: isOrbitActive ? 1.15 : 1.05 }}
+                  >
+                    <motion.span
+                      className="text-sm font-bold text-center leading-tight"
+                      animate={{
+                        scale: isOrbitActive ? 1 : 1,
+                        color: isOrbitActive ? '#4A2500' : '#ffffff'
                       }}
                     >
-                      <span className="transition-transform duration-300 group-hover:scale-110">
-                        {social.icon}
-                      </span>
+                      {isOrbitActive ? '☀️' : "Let's\nConnect"}
+                    </motion.span>
+                  </motion.div>
 
-                      {/* Platform name tooltip */}
-                      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
-                        <span className="text-xs font-medium text-muted-foreground whitespace-nowrap">
-                          {social.name}
-                        </span>
-                      </div>
-                    </motion.a>
-                  ))}
+                  {/* Orbit Ring - appears on hover */}
+                  <motion.div
+                    className="absolute w-56 h-56 rounded-full border-2 border-dashed"
+                    animate={{
+                      opacity: isOrbitActive ? 1 : 0,
+                      scale: isOrbitActive ? 1 : 0.5,
+                      borderColor: isOrbitActive ? 'hsl(var(--primary) / 0.4)' : 'transparent'
+                    }}
+                    transition={{ duration: 0.5 }}
+                  />
+
+                  {/* Orbiting Icons */}
+                  <div className={`absolute w-56 h-56 ${isOrbitActive ? 'animate-orbit' : ''}`}>
+                    {socialLinks.map((social, index) => {
+                      const angle = (index * 360) / socialLinks.length;
+                      const radius = 112;
+                      const targetX = Math.cos((angle - 90) * Math.PI / 180) * radius;
+                      const targetY = Math.sin((angle - 90) * Math.PI / 180) * radius;
+
+                      return (
+                        <motion.a
+                          key={social.name}
+                          href={social.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute w-12 h-12 rounded-full flex items-center justify-center hover:scale-125 hover:z-20 transition-transform"
+                          style={{
+                            backgroundColor: social.color === '#181717' ? '#ffffff' : social.color,
+                            color: social.color === '#181717' ? '#181717' : '#ffffff',
+                            boxShadow: `0 4px 20px ${social.color}60`,
+                            left: 'calc(50% - 24px)',
+                            top: 'calc(50% - 24px)',
+                          }}
+                          animate={{
+                            x: isOrbitActive ? targetX : 0,
+                            y: isOrbitActive ? targetY : 0,
+                            scale: isOrbitActive ? 1 : 0,
+                            opacity: isOrbitActive ? 1 : 0,
+                          }}
+                          transition={{
+                            type: 'spring',
+                            stiffness: 200,
+                            damping: 20,
+                            delay: isOrbitActive ? index * 0.1 : 0,
+                          }}
+                          whileHover={{ scale: 1.3 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <span className={isOrbitActive ? 'animate-counter-orbit' : ''}>
+                            {social.icon}
+                          </span>
+                        </motion.a>
+                      );
+                    })}
+                  </div>
                 </div>
+
+                <p className="text-center text-sm text-muted-foreground mt-2">
+                  {isOrbitActive ? 'Click any planet to connect!' : 'Hover the sun to explore'}
+                </p>
               </motion.div>
 
               {/* Availability */}

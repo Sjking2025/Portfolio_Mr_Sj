@@ -269,3 +269,33 @@ body.is-mobile {
     -webkit-background-clip: text;
   }
 }
+
+/* Orbit Animation for Social Icons */
+@keyframes orbit {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes counter-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.animate-orbit {
+  animation: orbit 20s linear infinite;
+}
+
+.animate-counter-orbit {
+  animation: counter-orbit 20s linear infinite;
+  display: inline-flex;
+}

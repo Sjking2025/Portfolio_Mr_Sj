@@ -1,9 +1,11 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import DemoCarousel from '@/components/DemoCarousel';
 
 const Projects = () => {
   const [filter, setFilter] = useState('all');
+  const [activeProject, setActiveProject] = useState<number | null>(null);
 
   const projects = [
     {
@@ -14,7 +16,15 @@ const Projects = () => {
       category: "fullstack",
       technologies: ["MongoDB", "Express.js", "React", "Node.js"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Sjking2025/MERN-UNIQUETODO-APP"
+      githubUrl: "https://github.com/Sjking2025/MERN-UNIQUETODO-APP",
+      screenshots: [
+        { id: 1, url: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=300&fit=crop', title: 'Dashboard' },
+        { id: 2, url: 'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=400&h=300&fit=crop', title: 'Task List' },
+        { id: 3, url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop', title: 'Add Task' },
+        { id: 4, url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop', title: 'Analytics' },
+        { id: 5, url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop', title: 'Settings' },
+        { id: 6, url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop', title: 'Mobile View' },
+      ]
     },
     {
       id: 2,
@@ -24,7 +34,15 @@ const Projects = () => {
       category: "frontend",
       technologies: ["React", "JavaScript", "CSS", "OpenWeatherMap API"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Sjking2025/React_Weather_App"
+      githubUrl: "https://github.com/Sjking2025/React_Weather_App",
+      screenshots: [
+        { id: 1, url: 'https://images.unsplash.com/photo-1592210454359-9043f067919b?w=400&h=300&fit=crop', title: 'Current Weather' },
+        { id: 2, url: 'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=400&h=300&fit=crop', title: 'Forecast' },
+        { id: 3, url: 'https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=400&h=300&fit=crop', title: 'Hourly View' },
+        { id: 4, url: 'https://images.unsplash.com/photo-1561484930-998b6a7b22e8?w=400&h=300&fit=crop', title: 'Location Search' },
+        { id: 5, url: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=300&fit=crop', title: 'Map View' },
+        { id: 6, url: 'https://images.unsplash.com/photo-1419833173245-f59e1b93f9ee?w=400&h=300&fit=crop', title: 'Night Mode' },
+      ]
     },
     {
       id: 3,
@@ -34,7 +52,15 @@ const Projects = () => {
       category: "frontend",
       technologies: ["JavaScript", "HTML5", "CSS3", "Drag & Drop API"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Sjking2025/kanban-board"
+      githubUrl: "https://github.com/Sjking2025/kanban-board",
+      screenshots: [
+        { id: 1, url: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop', title: 'Board View' },
+        { id: 2, url: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop', title: 'Drag & Drop' },
+        { id: 3, url: 'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=400&h=300&fit=crop', title: 'Task Details' },
+        { id: 4, url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&h=300&fit=crop', title: 'Themes' },
+        { id: 5, url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=300&fit=crop', title: 'Team View' },
+        { id: 6, url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop', title: 'Mobile' },
+      ]
     },
     {
       id: 4,
@@ -44,7 +70,15 @@ const Projects = () => {
       category: "3d",
       technologies: ["React", "Three.js", "React Three Fiber", "Framer Motion"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Sjking2025/Lift_Simulator_3D"
+      githubUrl: "https://github.com/Sjking2025/Lift_Simulator_3D",
+      screenshots: [
+        { id: 1, url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop', title: '3D View' },
+        { id: 2, url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=300&fit=crop', title: 'Elevator Interior' },
+        { id: 3, url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop', title: 'Building View' },
+        { id: 4, url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop', title: 'Floor Selection' },
+        { id: 5, url: 'https://images.unsplash.com/photo-1460574283810-2aab119d8511?w=400&h=300&fit=crop', title: 'Controls' },
+        { id: 6, url: 'https://images.unsplash.com/photo-1478860409698-8707f313ee8b?w=400&h=300&fit=crop', title: 'Activity Log' },
+      ]
     },
     {
       id: 5,
@@ -54,7 +88,15 @@ const Projects = () => {
       category: "ai",
       technologies: ["Python", "NLP", "React", "FastAPI"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Sjking2025/HR-Recruitment-Chatbot"
+      githubUrl: "https://github.com/Sjking2025/HR-Recruitment-Chatbot",
+      screenshots: [
+        { id: 1, url: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=400&h=300&fit=crop', title: 'Chat Interface' },
+        { id: 2, url: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=400&h=300&fit=crop', title: 'AI Response' },
+        { id: 3, url: 'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=400&h=300&fit=crop', title: 'Job Matching' },
+        { id: 4, url: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop', title: 'Resume Upload' },
+        { id: 5, url: 'https://images.unsplash.com/photo-1565688534245-05d6b5be184a?w=400&h=300&fit=crop', title: 'Analytics' },
+        { id: 6, url: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=400&h=300&fit=crop', title: 'Candidates' },
+      ]
     },
     {
       id: 6,
@@ -64,7 +106,15 @@ const Projects = () => {
       category: "ai",
       technologies: ["Python", "React", "AI/ML", "PDF Generation"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Sjking2025/Resume-Builder-Parser-Analyzer-Pro"
+      githubUrl: "https://github.com/Sjking2025/Resume-Builder-Parser-Analyzer-Pro",
+      screenshots: [
+        { id: 1, url: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop', title: 'Builder' },
+        { id: 2, url: 'https://images.unsplash.com/photo-1554774853-719586f82d77?w=400&h=300&fit=crop', title: 'ATS Score' },
+        { id: 3, url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop', title: 'Templates' },
+        { id: 4, url: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop', title: 'AI Suggestions' },
+        { id: 5, url: 'https://images.unsplash.com/photo-1551836022-4c4c79ecde51?w=400&h=300&fit=crop', title: 'Export PDF' },
+        { id: 6, url: 'https://images.unsplash.com/photo-1573495612937-f01934eeaaa7?w=400&h=300&fit=crop', title: 'Preview' },
+      ]
     },
     {
       id: 7,
@@ -74,7 +124,15 @@ const Projects = () => {
       category: "ai",
       technologies: ["React", "Python", "TensorFlow", "MongoDB"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Sjking2025/AI-Driven-Incremental-Learning-Platform"
+      githubUrl: "https://github.com/Sjking2025/AI-Driven-Incremental-Learning-Platform",
+      screenshots: [
+        { id: 1, url: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=400&h=300&fit=crop', title: 'Dashboard' },
+        { id: 2, url: 'https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?w=400&h=300&fit=crop', title: 'Courses' },
+        { id: 3, url: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=400&h=300&fit=crop', title: 'Lesson' },
+        { id: 4, url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop', title: 'Quiz' },
+        { id: 5, url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=300&fit=crop', title: 'Progress' },
+        { id: 6, url: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop', title: 'AI Tutor' },
+      ]
     },
     {
       id: 8,
@@ -84,7 +142,15 @@ const Projects = () => {
       category: "fullstack",
       technologies: ["React", "Node.js", "MongoDB", "Stripe"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Sjking2025/Ecommerce_platform_reactjs"
+      githubUrl: "https://github.com/Sjking2025/Ecommerce_platform_reactjs",
+      screenshots: [
+        { id: 1, url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop', title: 'Homepage' },
+        { id: 2, url: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=400&h=300&fit=crop', title: 'Products' },
+        { id: 3, url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop', title: 'Product Detail' },
+        { id: 4, url: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=300&fit=crop', title: 'Cart' },
+        { id: 5, url: 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=400&h=300&fit=crop', title: 'Checkout' },
+        { id: 6, url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop', title: 'Order History' },
+      ]
     }
   ];
 
@@ -169,14 +235,17 @@ const Projects = () => {
                       whileHover={{ opacity: 1 }}
                       className="absolute inset-0 bg-background/80 flex items-center justify-center space-x-4"
                     >
-                      <motion.a
+                      <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
-                        href={project.liveUrl}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveProject(project.id);
+                        }}
                         className="px-4 py-2 bg-primary text-primary-foreground rounded-xl font-medium"
                       >
                         Live Demo
-                      </motion.a>
+                      </motion.button>
                       <motion.a
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
@@ -235,6 +304,17 @@ const Projects = () => {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Demo Carousel Modal */}
+      <AnimatePresence>
+        {activeProject !== null && (
+          <DemoCarousel
+            screenshots={projects.find(p => p.id === activeProject)?.screenshots || []}
+            projectTitle={projects.find(p => p.id === activeProject)?.title || ''}
+            onClose={() => setActiveProject(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
