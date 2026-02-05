@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { DemoProvider } from "@/contexts/DemoContext";
 import ThemeSelector from "@/components/ThemeSelector";
 import { CustomCursor } from "@/components/animations";
 import { initSmoothScroll, destroySmoothScroll } from "@/lib/smooth-scroll";
@@ -56,11 +57,13 @@ const AppContent = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <AppContent />
-      </TooltipProvider>
+      <DemoProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <AppContent />
+        </TooltipProvider>
+      </DemoProvider>
     </ThemeProvider>
   </QueryClientProvider>
 );

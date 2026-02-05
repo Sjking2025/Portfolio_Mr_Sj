@@ -102,18 +102,31 @@ const Projects = () => {
       id: 6,
       title: "Resume Builder & Analyzer Pro",
       description: "AI-powered resume builder with parsing capabilities, ATS compatibility checker, and intelligent suggestions for resume optimization.",
-      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&auto=format&fit=crop&q=60",
+      image: "/screenshots/resume-builder/cover.png",
       category: "ai",
       technologies: ["Python", "React", "AI/ML", "PDF Generation"],
       liveUrl: "#",
       githubUrl: "https://github.com/Sjking2025/Resume-Builder-Parser-Analyzer-Pro",
       screenshots: [
-        { id: 1, url: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop', title: 'Builder' },
-        { id: 2, url: 'https://images.unsplash.com/photo-1554774853-719586f82d77?w=400&h=300&fit=crop', title: 'ATS Score' },
-        { id: 3, url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop', title: 'Templates' },
-        { id: 4, url: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop', title: 'AI Suggestions' },
-        { id: 5, url: 'https://images.unsplash.com/photo-1551836022-4c4c79ecde51?w=400&h=300&fit=crop', title: 'Export PDF' },
-        { id: 6, url: 'https://images.unsplash.com/photo-1573495612937-f01934eeaaa7?w=400&h=300&fit=crop', title: 'Preview' },
+        // Resume Editor Features
+        { id: 1, url: '/screenshots/resume-builder/01-homepage.png', title: 'Homepage', description: 'AI-powered resume builder with 18 professional templates, ATS optimization, and privacy-first approach.' },
+        { id: 2, url: '/screenshots/resume-builder/03-editor-experience.png', title: 'Experience Editor', description: 'Add work experience with real-time live preview showing your resume updates instantly.' },
+        { id: 3, url: '/screenshots/resume-builder/06-editor-skills.png', title: 'Skills & Languages', description: 'Add technical skills, soft skills, and languages with smart tag-based input system.' },
+        { id: 4, url: '/screenshots/resume-builder/08-template-sidebar.png', title: 'Template Customization', description: 'Choose from ATS-friendly and Modern templates with adjustable text sizes and layouts.' },
+        // Template Showcase
+        { id: 5, url: '/screenshots/resume-builder/14-template-classic.png', title: 'Classic Template', description: 'Clean, professional design perfect for traditional industries and corporate roles.' },
+        { id: 6, url: '/screenshots/resume-builder/15-template-executive.png', title: 'Executive Template', description: 'Premium executive layout for senior positions and leadership roles.' },
+        { id: 7, url: '/screenshots/resume-builder/11-full-resume-preview.png', title: 'Full Resume Preview', description: 'Complete resume with all sections - experience, education, projects, skills, and certifications.' },
+        { id: 8, url: '/screenshots/resume-builder/10-pdf-export.png', title: 'PDF Export', description: 'Export to PDF with custom margins and professional formatting for applications.' },
+        // Portfolio Generator
+        { id: 9, url: '/screenshots/resume-builder/portfolio-gen/01-portfolio-preview.png', title: 'Portfolio Generator', description: 'Generate a professional portfolio website from your resume with multiple themes.' },
+        // Skill Gap Analyzer (user-specified order)
+        { id: 10, url: '/screenshots/resume-builder/skill-gap/06-job-input.png', title: 'Job Description Input', description: 'Paste a job description to analyze skill gaps. Auto-extracts key skills and matches against your resume (18 skills, 2 experiences).' },
+        { id: 11, url: '/screenshots/resume-builder/skill-gap/01-gap-analysis-report.png', title: 'Gap Analysis Report', description: 'Full Stack Developer role shows 63% match score with estimated 8-12 weeks prep time. Shows 14 matched, 7 missing, and 3 needs-work skills.' },
+        { id: 12, url: '/screenshots/resume-builder/skill-gap/02-skills-breakdown.png', title: 'Detailed Skills Breakdown', description: 'Complete breakdown: Matched skills (Node.js, JavaScript, MongoDB), Missing skills (React Native, Authentication), and AI-generated recommendations.' },
+        { id: 13, url: '/screenshots/resume-builder/skill-gap/04-learning-roadmap.png', title: 'Customize Your Roadmap', description: 'Set learning preferences: Available time (1-6 hrs/day), speed, timeline (14 days to 3 months), style, and video language options.' },
+        { id: 14, url: '/screenshots/resume-builder/skill-gap/07-analysis-steps.png', title: 'Generating Roadmap', description: 'AI generates personalized 8-week roadmap with weekly modules: Authentication, React Native, Flutter, Next.js, DevOps, and UX.' },
+        { id: 15, url: '/screenshots/resume-builder/skill-gap/generated-roadmap.png', title: 'Your Practice Roadmap', description: 'Week 1: React Native & TypeScript with 6 hrs learning, 9 hrs practice. Includes video courses, docs, projects, and validation questions.' },
       ]
     },
     {
