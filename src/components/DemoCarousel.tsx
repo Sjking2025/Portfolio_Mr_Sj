@@ -15,23 +15,7 @@ interface DemoCarouselProps {
 }
 
 const DemoCarousel: React.FC<DemoCarouselProps> = ({ screenshots, projectTitle, onClose }) => {
-    const [phase, setPhase] = useState<'pulling' | 'carousel'>('pulling');
-    const [pulledCount, setPulledCount] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0);
-
-    // Tissue-pull effect: reveal screenshots one by one
-    useEffect(() => {
-        if (phase === 'pulling' && pulledCount < screenshots.length) {
-            const timer = setTimeout(() => {
-                setPulledCount(prev => prev + 1);
-            }, 250);
-            return () => clearTimeout(timer);
-        } else if (phase === 'pulling' && pulledCount >= screenshots.length) {
-            // All pulled, transition to carousel
-            const timer = setTimeout(() => setPhase('carousel'), 600);
-            return () => clearTimeout(timer);
-        }
-    }, [phase, pulledCount, screenshots.length]);
 
     // Navigation
     const goToPrev = useCallback(() => {
@@ -53,28 +37,33 @@ const DemoCarousel: React.FC<DemoCarouselProps> = ({ screenshots, projectTitle, 
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [goToPrev, goToNext, onClose]);
 
-    // Auto-scroll in carousel phase
+    // Auto-scroll
     useEffect(() => {
-        if (phase === 'carousel') {
-            const interval = setInterval(goToNext, 5000);
-            return () => clearInterval(interval);
-        }
-    }, [phase, goToNext]);
+        const interval = setInterval(goToNext, 6000);
+        return () => clearInterval(interval);
+    }, [goToNext]);
+
+    // Get card index with wrapping
+    const getCardIndex = (offset: number) => {
+        return (currentIndex + offset + screenshots.length) % screenshots.length;
+    };
 
     return (
         <div
             className="fixed inset-0 z-[99999] flex flex-col"
-            style={{ backgroundColor: '#0a0a0a' }}
+            style={{
+                background: 'linear-gradient(180deg, #0a1628 0%, #0d1829 50%, #0a1628 100%)'
+            }}
         >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 md:p-6 border-b border-white/10">
+            <div className="flex items-center justify-between p-4 md:p-6">
                 <h2 className="text-xl md:text-2xl font-bold text-white">
                     {projectTitle}
-                    <span className="text-white/50 ml-2">— Demo</span>
+                    <span className="text-white/50 ml-2 font-normal">— Demo</span>
                 </h2>
                 <button
                     onClick={onClose}
-                    className="p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+                    className="p-2 md:p-3 rounded-full border border-cyan-500/30 hover:border-cyan-400 hover:bg-cyan-500/10 text-cyan-400 transition-all duration-300"
                 >
                     <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -82,124 +71,156 @@ const DemoCarousel: React.FC<DemoCarouselProps> = ({ screenshots, projectTitle, 
                 </button>
             </div>
 
-            {/* Main Content */}
-            <div className="flex-1 flex items-center justify-center overflow-hidden p-4">
-                {/* Pulling Phase */}
-                {phase === 'pulling' && (
-                    <div className="relative w-80 md:w-96 h-60 md:h-72">
-                        {screenshots.slice(0, pulledCount).map((screenshot, idx) => {
-                            const stackOffset = (pulledCount - 1 - idx) * 6;
-                            return (
-                                <motion.div
-                                    key={screenshot.id}
-                                    initial={{ y: 80, opacity: 0, scale: 0.9 }}
-                                    animate={{
-                                        y: -stackOffset,
-                                        x: stackOffset * 0.5,
-                                        opacity: 1,
-                                        scale: 1,
-                                        rotate: (idx % 2 === 0 ? 1 : -1) * (idx * 0.5)
+            {/* Carousel Container */}
+            <div className="flex-1 flex items-center justify-center relative overflow-hidden">
+                {/* Left Arrow */}
+                <button
+                    onClick={goToPrev}
+                    className="absolute left-4 md:left-12 z-30 w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-cyan-500/50 hover:border-cyan-400 hover:bg-cyan-500/10 text-cyan-400 transition-all duration-300 flex items-center justify-center"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+
+                {/* 3D Cards Container */}
+                <div className="relative w-full h-[350px] md:h-[450px] flex items-center justify-center">
+                    {[-2, -1, 0, 1, 2].map((offset) => {
+                        const cardIndex = getCardIndex(offset);
+                        const screenshot = screenshots[cardIndex];
+                        const isCenter = offset === 0;
+
+                        // Position and styling calculations
+                        const xOffset = offset * 320; // Horizontal spacing
+                        const zOffset = Math.abs(offset) * -150; // Depth
+                        const scale = isCenter ? 1 : 0.7 - Math.abs(offset) * 0.05;
+                        const rotateY = offset * -20; // Rotation angle
+
+                        return (
+                            <motion.div
+                                key={`card-${cardIndex}-${offset}`}
+                                animate={{
+                                    x: xOffset,
+                                    z: zOffset,
+                                    rotateY: rotateY,
+                                    scale: scale,
+                                }}
+                                transition={{
+                                    type: 'spring',
+                                    stiffness: 200,
+                                    damping: 25
+                                }}
+                                className="absolute cursor-pointer"
+                                style={{
+                                    zIndex: 10 - Math.abs(offset),
+                                    transformStyle: 'preserve-3d',
+                                    perspective: '1000px',
+                                }}
+                                onClick={() => !isCenter && setCurrentIndex(cardIndex)}
+                            >
+                                {/* Card */}
+                                <div
+                                    className={`relative rounded-2xl overflow-hidden transition-all duration-500 ${isCenter
+                                            ? 'shadow-[0_0_80px_rgba(6,182,212,0.5)]'
+                                            : 'shadow-xl'
+                                        }`}
+                                    style={{
+                                        width: isCenter ? '480px' : '360px',
+                                        maxWidth: '85vw',
+                                        border: isCenter ? '3px solid rgba(6, 182, 212, 0.7)' : '1px solid rgba(255,255,255,0.1)',
                                     }}
-                                    transition={{ type: 'spring', damping: 20, stiffness: 200 }}
-                                    className="absolute inset-0 rounded-xl overflow-hidden shadow-2xl border border-white/10"
-                                    style={{ zIndex: idx }}
                                 >
+                                    {/* Image with grayscale for non-center */}
                                     <img
                                         src={screenshot.url}
                                         alt={screenshot.title}
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-52 md:h-64 object-cover transition-all duration-500"
+                                        style={{
+                                            filter: isCenter
+                                                ? 'none'
+                                                : 'grayscale(100%) blur(2px) brightness(0.6)',
+                                        }}
                                     />
-                                    <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/90 to-transparent">
-                                        <p className="text-white font-medium text-sm">{screenshot.title}</p>
-                                    </div>
-                                </motion.div>
-                            );
-                        })}
 
-                        {/* Progress indicator */}
-                        <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-white/60 text-sm">
-                            Loading... {pulledCount}/{screenshots.length}
-                        </div>
-                    </div>
-                )}
+                                    {/* Overlay for side cards */}
+                                    {!isCenter && (
+                                        <div className="absolute inset-0 bg-black/30" />
+                                    )}
 
-                {/* Carousel Phase */}
-                {phase === 'carousel' && (
-                    <div className="w-full max-w-4xl mx-auto">
-                        {/* Main Card */}
-                        <div className="relative">
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={currentIndex}
-                                    initial={{ opacity: 0, x: 50 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -50 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="bg-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
-                                >
-                                    <img
-                                        src={screenshots[currentIndex].url}
-                                        alt={screenshots[currentIndex].title}
-                                        className="w-full h-64 md:h-96 object-cover"
-                                    />
-                                </motion.div>
-                            </AnimatePresence>
+                                    {/* Stats bar only on center card */}
+                                    {isCenter && (
+                                        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4">
+                                            <div className="flex justify-center gap-6 text-white text-xs md:text-sm">
+                                                <div className="text-center">
+                                                    <div className="font-bold text-cyan-400">Feature</div>
+                                                    <div className="text-white/60 uppercase tracking-wider text-[10px]">Highlight</div>
+                                                </div>
+                                                <div className="text-center">
+                                                    <div className="font-bold text-cyan-400">Modern</div>
+                                                    <div className="text-white/60 uppercase tracking-wider text-[10px]">Design</div>
+                                                </div>
+                                                <div className="text-center">
+                                                    <div className="font-bold text-cyan-400">Responsive</div>
+                                                    <div className="text-white/60 uppercase tracking-wider text-[10px]">Layout</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
 
-                            {/* Navigation Arrows */}
-                            <button
-                                onClick={goToPrev}
-                                className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-sm transition-colors"
-                            >
-                                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-                            <button
-                                onClick={goToNext}
-                                className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-sm transition-colors"
-                            >
-                                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div>
+                                    {/* Label on side cards */}
+                                    {!isCenter && (
+                                        <div className="absolute bottom-3 left-3 right-3">
+                                            <p className="text-cyan-400/80 text-xs font-medium uppercase tracking-wider truncate">
+                                                {screenshot.title}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            </motion.div>
+                        );
+                    })}
+                </div>
 
-                        {/* Description */}
-                        <motion.div
-                            key={`desc-${currentIndex}`}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="mt-6 text-center"
-                        >
-                            <h3 className="text-xl md:text-2xl font-bold text-white">
-                                {screenshots[currentIndex].title}
-                            </h3>
-                            <p className="mt-2 text-white/70 max-w-2xl mx-auto">
-                                {screenshots[currentIndex].description ||
-                                    `View of the ${screenshots[currentIndex].title.toLowerCase()} showing key features and functionality.`}
-                            </p>
-                        </motion.div>
+                {/* Right Arrow */}
+                <button
+                    onClick={goToNext}
+                    className="absolute right-4 md:right-12 z-30 w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-cyan-500/50 hover:border-cyan-400 hover:bg-cyan-500/10 text-cyan-400 transition-all duration-300 flex items-center justify-center"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
 
-                        {/* Dots */}
-                        <div className="flex justify-center gap-2 mt-6">
-                            {screenshots.map((_, idx) => (
-                                <button
-                                    key={idx}
-                                    onClick={() => setCurrentIndex(idx)}
-                                    className={`w-2.5 h-2.5 rounded-full transition-all ${idx === currentIndex
-                                        ? 'bg-white scale-125'
-                                        : 'bg-white/30 hover:bg-white/50'
-                                        }`}
-                                />
-                            ))}
-                        </div>
+            {/* Title & Description */}
+            <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="text-center px-4 pb-4"
+            >
+                <h3 className="text-2xl md:text-3xl font-bold italic text-white mb-2">
+                    {screenshots[currentIndex].title}
+                </h3>
+                <p className="text-white/60 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+                    {screenshots[currentIndex].description ||
+                        `View of the ${screenshots[currentIndex].title.toLowerCase()} showing key features and functionality. Experience the intuitive design and seamless user interface.`}
+                </p>
+            </motion.div>
 
-                        {/* Keyboard hint */}
-                        <p className="mt-4 text-center text-white/40 text-xs">
-                            ← → to navigate • ESC to close
-                        </p>
-                    </div>
-                )}
+            {/* Dot Indicators */}
+            <div className="flex justify-center gap-3 pb-6">
+                {screenshots.map((_, idx) => (
+                    <button
+                        key={idx}
+                        onClick={() => setCurrentIndex(idx)}
+                        className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${idx === currentIndex
+                                ? 'bg-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.8)]'
+                                : 'bg-white/30 hover:bg-white/50'
+                            }`}
+                    />
+                ))}
             </div>
         </div>
     );
