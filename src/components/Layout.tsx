@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import Navigation from './Navigation';
 import ParticleBackground from './ParticleBackground';
+import { useDemo } from '@/contexts/DemoContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -35,12 +36,14 @@ const pageTransition = {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
+  const { isDemoActive } = useDemo();
 
   return (
     <div className="min-h-screen relative overflow-hidden">
       <ParticleBackground />
-      <Navigation />
-      
+      {/* Hide main navigation when demo is active */}
+      {!isDemoActive && <Navigation />}
+
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}

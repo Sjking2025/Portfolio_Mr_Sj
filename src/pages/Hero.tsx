@@ -70,24 +70,24 @@ const Hero = () => {
                 onClick={() => navigate('/contact')}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                className="handshake-btn relative overflow-hidden flex items-center gap-3"
+                className="handshake-btn relative overflow-hidden flex items-center justify-center gap-2"
               >
                 {/* Button Text */}
                 <span>Let's Work Together</span>
 
-                {/* Handshake Icon on Right */}
-                <AnimatePresence>
-                  {isHovered && (
-                    <motion.div
-                      initial={{ scale: 0, rotate: 45 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      exit={{ scale: 0, rotate: -45 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.1 }}
-                    >
-                      <Handshake className="w-6 h-6" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* Handshake Icon - Always present, opacity animated */}
+                <motion.div
+                  animate={{
+                    opacity: isHovered ? 1 : 0,
+                    scale: isHovered ? 1 : 0.5,
+                    rotate: isHovered ? 0 : 45
+                  }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  className="w-6 h-6"
+                  style={{ width: isHovered ? 24 : 0, marginLeft: isHovered ? 0 : -8 }}
+                >
+                  <Handshake className="w-6 h-6" />
+                </motion.div>
               </motion.button>
 
               <motion.button
