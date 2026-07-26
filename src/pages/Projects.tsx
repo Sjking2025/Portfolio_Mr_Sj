@@ -105,7 +105,7 @@ const Projects = () => {
       image: "/screenshots/resume-builder/cover.png",
       category: "ai",
       technologies: ["Python", "React", "AI/ML", "PDF Generation"],
-      liveUrl: "#",
+      liveUrl: "https://resume-builder-pro-gilt.vercel.app/",
       githubUrl: "https://github.com/Sjking2025/Resume-Builder-Parser-Analyzer-Pro",
       screenshots: [
         // Resume Editor Features
@@ -164,6 +164,24 @@ const Projects = () => {
         { id: 5, url: 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=400&h=300&fit=crop', title: 'Checkout' },
         { id: 6, url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop', title: 'Order History' },
       ]
+    },
+    {
+      id: 9,
+      title: "PrintFlow",
+      description: "The Ultimate Digital Command Center for Modern Print Shops. A full-stack order management system with automated pricing, priority-sorted queue, Razorpay payments, and role-based dashboards for customers, shop owners, and admins.",
+      image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=800&auto=format&fit=crop&q=60",
+      category: "fullstack",
+      technologies: ["Spring Boot", "React", "PostgreSQL", "Razorpay", "Firebase", "TypeScript"],
+      liveUrl: "https://printflow-order-management-frontend.vercel.app/",
+      githubUrl: "https://github.com/Sjking2025/printflow-order-management",
+      screenshots: [
+        { id: 1, url: 'https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=300&fit=crop', title: 'Print Shop Dashboard' },
+        { id: 2, url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop', title: 'Order Queue' },
+        { id: 3, url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop', title: 'Analytics' },
+        { id: 4, url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop', title: 'Payment Integration' },
+        { id: 5, url: 'https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=400&h=300&fit=crop', title: 'System Architecture' },
+        { id: 6, url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop', title: 'Queue Engine' },
+      ]
     }
   ];
 
@@ -196,6 +214,92 @@ const Projects = () => {
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               A showcase of my latest work, featuring innovative solutions and cutting-edge technologies
             </p>
+          </div>
+
+          {/* Featured Projects */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <h2 className="text-2xl md:text-3xl font-bold">
+                <span className="gradient-text">Featured Projects</span>
+              </h2>
+              <div className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent" />
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              {[projects.find(p => p.id === 9), projects.find(p => p.id === 6)].map((project, index) => (
+                <motion.div
+                  key={project?.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.15 }}
+                  whileHover={{ y: -5 }}
+                  className="group relative rounded-3xl overflow-hidden min-h-[320px] cursor-pointer"
+                  data-cursor="view"
+                  onClick={() => setActiveProject(project?.id ?? null)}
+                >
+                  <div className="absolute inset-0">
+                    <motion.img
+                      whileHover={{ scale: 1.08 }}
+                      transition={{ duration: 0.5 }}
+                      src={project?.image}
+                      alt={project?.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
+                  </div>
+                  <div className="relative h-full flex flex-col justify-end p-8">
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-1 bg-primary/20 text-primary text-xs font-semibold rounded-full uppercase tracking-wider">
+                          {project?.category === 'fullstack' ? 'Full Stack' : 'AI / ML'}
+                        </span>
+                        <span className="px-3 py-1 bg-white/10 text-muted-foreground text-xs font-medium rounded-full backdrop-blur-sm">
+                          Featured
+                        </span>
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-bold text-white">
+                        {project?.title}
+                      </h3>
+                      <p className="text-white/70 text-sm leading-relaxed max-w-xl line-clamp-2">
+                        {project?.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {project?.technologies.slice(0, 4).map((tech) => (
+                          <span key={tech} className="px-3 py-1 bg-white/10 text-white/80 rounded-full text-xs font-medium backdrop-blur-sm border border-white/10">
+                            {tech}
+                          </span>
+                        ))}
+                        {project && project.technologies.length > 4 && (
+                          <span className="px-3 py-1 bg-white/10 text-white/60 rounded-full text-xs backdrop-blur-sm">
+                            +{project.technologies.length - 4}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex gap-3 pt-2">
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveProject(project?.id ?? null);
+                          }}
+                          className="px-5 py-2.5 bg-primary text-primary-foreground rounded-xl font-medium text-sm shadow-lg shadow-primary/25"
+                        >
+                          Live Demo
+                        </motion.button>
+                        <motion.a
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          href={project?.githubUrl}
+                          className="px-5 py-2.5 glass-effect rounded-xl font-medium text-sm"
+                        >
+                          GitHub
+                        </motion.a>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* Filter buttons */}
