@@ -33,3 +33,9 @@ Certificates_MrSJ/
 *.njsproj
 *.sln
 *.sw?
+
+# AI tooling / local assistant directories
+.opencode/
+.audit/
+.zencoder/
+.zenflow/
