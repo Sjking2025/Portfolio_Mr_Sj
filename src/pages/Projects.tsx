@@ -169,18 +169,60 @@ const Projects = () => {
       id: 9,
       title: "PrintFlow",
       description: "The Ultimate Digital Command Center for Modern Print Shops. A full-stack order management system with automated pricing, priority-sorted queue, Razorpay payments, and role-based dashboards for customers, shop owners, and admins.",
-      image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=800&auto=format&fit=crop&q=60",
+      image: "/screenshots/printflow/cover.png",
       category: "fullstack",
       technologies: ["Spring Boot", "React", "PostgreSQL", "Razorpay", "Firebase", "TypeScript"],
       liveUrl: "https://printflow-order-management-frontend.vercel.app/",
       githubUrl: "https://github.com/Sjking2025/printflow-order-management",
       screenshots: [
-        { id: 1, url: 'https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=300&fit=crop', title: 'Print Shop Dashboard' },
-        { id: 2, url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop', title: 'Order Queue' },
-        { id: 3, url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop', title: 'Analytics' },
-        { id: 4, url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop', title: 'Payment Integration' },
-        { id: 5, url: 'https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=400&h=300&fit=crop', title: 'System Architecture' },
-        { id: 6, url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop', title: 'Queue Engine' },
+        // Platform Overview & Landing Showcase
+        { id: 1, url: '/screenshots/printflow/01-landing-hero.png', title: 'Landing Page & Hero', description: 'Modern landing experience highlighting calm, precise digital order management workflows for modern print shops.' },
+        { id: 2, url: '/screenshots/printflow/02-landing-queue-preview.png', title: 'Live Production Queue Showcase', description: 'Automated document scanning, priority ordering, and real-time Razorpay payment verification.' },
+        { id: 3, url: '/screenshots/printflow/03-controlled-modification-window.png', title: 'Controlled Modification Window', description: 'Shop-defined grace period timer allowing customers to adjust copy counts before printing starts.' },
+        { id: 4, url: '/screenshots/printflow/04-built-in-clarification-chat.png', title: 'Contextual Clarification Chat', description: 'Direct timeline communication between shop owner and customer to resolve binding and paper specifications.' },
+        { id: 5, url: '/screenshots/printflow/05-smart-priority-queue.png', title: 'Smart Queue Intelligence', description: 'Automated sorting algorithms categorizing orders by Critical, High, and Standard urgency tiers.' },
+        { id: 6, url: '/screenshots/printflow/06-instant-realtime-quoting.png', title: 'Instant Dynamic Quoting', description: 'Real-time transparent price calculation across page counts, B&W vs color, duplexing, and finishing.' },
+        { id: 7, url: '/screenshots/printflow/07-unified-workspace-overview.png', title: 'Unified Workspace Ecosystem', description: 'Complete operational hub uniting Owner Dashboard, Customer Self-Service Portal, and Verified Payment Gateways.' },
+
+        // Role-Based Access Control (RBAC)
+        { id: 8, url: '/screenshots/printflow/08-auth-customer-portal.png', title: 'Customer Portal Authentication', description: 'Role-based customer sign-in via Google OAuth or email to submit jobs and track print progress.' },
+        { id: 9, url: '/screenshots/printflow/09-auth-shop-owner.png', title: 'Shop Owner Terminal Sign-In', description: 'Dedicated terminal access for print house operators to manage live queues and verified payments.' },
+        { id: 10, url: '/screenshots/printflow/10-auth-admin-console.png', title: 'Enterprise Admin Console Access', description: 'Restricted system administration login with role-based access control (RBAC) and audit capabilities.' },
+
+        // Customer Self-Service Order Workflow
+        { id: 11, url: '/screenshots/printflow/11-customer-orders-dashboard.png', title: 'Customer Order History Hub', description: 'Comprehensive tracking dashboard with tab filters for Pending, In Progress, Completed, and Cancelled orders.' },
+        { id: 12, url: '/screenshots/printflow/12-order-select-shop.png', title: 'Order Flow - Select Print Shop', description: 'Browse verified local and campus print shops with transparent per-page rates for B&W and color.' },
+        { id: 13, url: '/screenshots/printflow/13-order-document-upload.png', title: 'Order Flow - Document Upload', description: 'Drag-and-drop file upload supporting PDF, DOCX, JPG, and PNG files up to 20MB per document.' },
+        { id: 14, url: '/screenshots/printflow/14-order-configure-specs.png', title: 'Order Flow - Document Specifications', description: 'Detailed print settings for copy count, color mode (B&W/Color), duplexing, spiral binding, and lamination.' },
+        { id: 15, url: '/screenshots/printflow/15-order-speed-turnaround.png', title: 'Order Flow - Priority & Turnaround', description: 'Select turnaround speed from Standard, High Priority (+₹10), or Critical Rush (+₹5) with live order recalculation.' },
+        { id: 16, url: '/screenshots/printflow/16-payment-method-selection.png', title: 'Order Flow - Payment Method Selection', description: 'Choose between instant online checkout with Razorpay or shop counter UPI QR code / cash payment.' },
+
+        // Razorpay Payment Integration & Verification
+        { id: 17, url: '/screenshots/printflow/17-payment-checkout-summary.png', title: 'Order Checkout - Review & Pay', description: 'Final invoice summary including subtotal and priority rush fees before launching secure Razorpay checkout.' },
+        { id: 18, url: '/screenshots/printflow/18-razorpay-contact-verification.png', title: 'Razorpay Checkout - Contact Details', description: 'Customer verification modal capturing phone number and email for automated SMS receipts and payment tracking.' },
+        { id: 19, url: '/screenshots/printflow/19-razorpay-gateway-options.png', title: 'Razorpay Gateway - Payment Rails', description: 'Multi-payment support featuring dynamic UPI QR, Credit/Debit cards, Netbanking, Wallets, and EMI.' },
+        { id: 20, url: '/screenshots/printflow/20-razorpay-payment-success.png', title: 'Razorpay Gateway - Payment Verified', description: 'Instant transaction capture screen displaying Razorpay payment ID and automated order redirect.' },
+        { id: 21, url: '/screenshots/printflow/21-payment-receipt-verification.png', title: 'Digital Payment Receipt Banner', description: 'Verified payment confirmation tag tied to Razorpay transaction reference and precise payment timestamp.' },
+        { id: 22, url: '/screenshots/printflow/22-customer-order-tracking.png', title: 'Customer Order Tracking & Actions', description: 'Live 4-phase production tracker with direct shop phone contact, quantity adjustment, and chat assistance.' },
+
+        // Shop Owner Command Center & Operations
+        { id: 23, url: '/screenshots/printflow/23-owner-dashboard-overview.png', title: 'Shop Owner Command Center', description: 'Real-time production metrics: Ready to Print, Total Pending, Urgent Jobs, and daily/lifetime revenue.' },
+        { id: 24, url: '/screenshots/printflow/24-owner-smart-queue-hardware.png', title: 'Owner Portal - Smart Queue & Hardware', description: 'Priority-sorted live order cards alongside hardware health monitors for color and B&W printing machines.' },
+        { id: 25, url: '/screenshots/printflow/25-owner-order-management.png', title: 'Owner Portal - Order Inspection & Actions', description: 'Order inspection detail view featuring embedded document thumbnail preview, download, delay, and start actions.' },
+        { id: 26, url: '/screenshots/printflow/26-owner-clarification-drawer.png', title: 'Owner Portal - Clarification Drawer', description: 'In-app direct messaging drawer enabling shop operators to quickly resolve customer questions and delivery times.' },
+        { id: 27, url: '/screenshots/printflow/27-owner-customers-directory.png', title: 'Shop CRM - Customer Directory', description: 'Customer directory tracking repeat client accounts, order counts, email records, and recent orders.' },
+        { id: 28, url: '/screenshots/printflow/28-owner-live-queue-filters.png', title: 'Live Production Queue Management', description: 'Real-time queue synchronized across terminals with filters for Ready to Print, Needs Acceptance, and On Machine.' },
+
+        // Shop Operations & Configuration
+        { id: 29, url: '/screenshots/printflow/29-shop-availability-closure.png', title: 'Shop Availability & Status Controls', description: 'Quick toggle status manager for Shop Open, Lunch Break, Machine Maintenance, Emergency, and Custom Message.' },
+        { id: 30, url: '/screenshots/printflow/30-shop-maintenance-reopen-timer.png', title: 'Maintenance Mode with Reopen Timer', description: 'Set expected repair completion time with date/time picker, keeping customers informed and pausing new orders.' },
+        { id: 31, url: '/screenshots/printflow/31-shop-pricing-rules-config.png', title: 'Shop Settings - Pricing & Order Rules', description: 'Configure base page pricing, A3 multipliers, duplex discounts, binding add-ons, and copy lock timers.' },
+        { id: 32, url: '/screenshots/printflow/32-shop-payouts-notifications.png', title: 'Shop Settings - UPI Payouts & Alerts', description: 'Merchant UPI ID setup, optional GSTIN registration, and notification channels for Email, SMS, and WhatsApp.' },
+
+        // Enterprise Administration & Governance
+        { id: 33, url: '/screenshots/printflow/33-admin-enterprise-dashboard.png', title: 'Enterprise Admin - Systems Overview', description: 'Network-wide administrative console tracking total customers, active accounts, shop reviews, and security alerts.' },
+        { id: 34, url: '/screenshots/printflow/34-admin-customer-governance.png', title: 'Enterprise Admin - Customer Governance', description: 'Platform customer registry showing internal user IDs, registered emails, order tallies, and active states.' },
+        { id: 35, url: '/screenshots/printflow/35-admin-shop-owner-management.png', title: 'Enterprise Admin - Shop Partner Directory', description: 'Multi-shop network directory managing partner accounts, shop names, business locations, and verification status.' },
       ]
     }
   ];
