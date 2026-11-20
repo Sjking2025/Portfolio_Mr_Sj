@@ -224,6 +224,28 @@ const Projects = () => {
         { id: 34, url: '/screenshots/printflow/34-admin-customer-governance.png', title: 'Enterprise Admin - Customer Governance', description: 'Platform customer registry showing internal user IDs, registered emails, order tallies, and active states.' },
         { id: 35, url: '/screenshots/printflow/35-admin-shop-owner-management.png', title: 'Enterprise Admin - Shop Partner Directory', description: 'Multi-shop network directory managing partner accounts, shop names, business locations, and verification status.' },
       ]
+    },
+    {
+      id: 10,
+      title: "BUZZER.IO",
+      description: "A millisecond-accurate, real-time competitive buzzer system built for quiz nights, trivia events, and classroom competitions with Socket.IO, live queue ladder, and PIN-gated host dashboard.",
+      image: "/screenshots/buzzer-app/cover.png",
+      category: "fullstack",
+      technologies: ["React 19", "Socket.IO", "Node.js", "Express 5", "Tailwind CSS", "Framer Motion"],
+      liveUrl: "https://buzzer-app-five.vercel.app/",
+      githubUrl: "https://github.com/Sjking2025/Buzzer-App",
+      screenshots: [
+        { id: 1, url: '/screenshots/buzzer-app/01-landing-arena.png', title: 'Tournament Arena & Team Join', description: 'Real-time tournament landing page with team registration, connection ping monitor, and auto-reconnect.' },
+        { id: 2, url: '/screenshots/buzzer-app/02-buzzer-locked-state.png', title: 'Team Buzzer - Locked State', description: 'Locked buzzer state waiting for quizmaster to open the question with sub-millisecond ping monitoring.' },
+        { id: 3, url: '/screenshots/buzzer-app/03-host-pin-modal.png', title: 'Host Control - PIN Gate', description: 'Restricted access security modal requiring master PIN authentication to unlock the quizmaster dashboard.' },
+        { id: 4, url: '/screenshots/buzzer-app/04-host-control-center.png', title: 'Host Control Center - Idle Deck', description: 'Master control console with keyboard shortcuts (Enable [E], Disable [D], Reset [R]), round selection, and registered teams.' },
+        { id: 5, url: '/screenshots/buzzer-app/05-buzzer-ready-pulse.png', title: 'Team Buzzer - Ready Pulse', description: 'High-urgency green pulsing state indicating buzzer is live and hot; smash via spacebar or tap.' },
+        { id: 6, url: '/screenshots/buzzer-app/06-buzzer-active-speaker.png', title: 'Team Buzzer - Floor Granted', description: 'Glowing blue active state awarded to the #1 fastest team to buzz in: "You Have The Floor! Answer Now!".' },
+        { id: 7, url: '/screenshots/buzzer-app/07-buzzer-queued-standby.png', title: 'Team Buzzer - Queued Standby', description: 'Standby rank indicator showing millisecond delta behind the winner (+3102ms) and queue position.' },
+        { id: 8, url: '/screenshots/buzzer-app/08-host-live-queue-ladder.png', title: 'Host Live Queue Ladder', description: 'Real-time queue ranked with millisecond precision alongside round selector and current active speaker.' },
+        { id: 9, url: '/screenshots/buzzer-app/09-tournament-leaderboard.png', title: 'Tournament Leaderboard Podium', description: 'Live WebSocket synchronized public leaderboard featuring 1st, 2nd, and 3rd place podium and stage mode.' },
+        { id: 10, url: '/screenshots/buzzer-app/10-host-scoring-controls.png', title: 'Host Scoring & Point Awarding', description: 'Award points with keyboard shortcuts: Correct (+10) [C], Wrong / Pass [P/W], and End Question [X].' },
+      ]
     }
   ];
 
