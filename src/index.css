@@ -74,6 +74,8 @@ All colors MUST be HSL.
 @layer components {
   .glass-effect {
     @apply backdrop-blur-md bg-white/5 border border-white/10;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .neon-text {

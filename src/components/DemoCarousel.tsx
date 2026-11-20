@@ -35,18 +35,19 @@ const DemoCarousel: React.FC<DemoCarouselProps> = ({ screenshots, projectTitle, 
     const [direction, setDirection] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
 
-    // ========== TISSUE-PULL PHASE ==========
+    // ========== TISSUE-PULL PHASE (Snappy Intro) ==========
+    const maxPullCards = Math.min(screenshots.length, 3);
     useEffect(() => {
-        if (phase === 'pulling' && pulledCount < screenshots.length) {
+        if (phase === 'pulling' && pulledCount < maxPullCards) {
             const timer = setTimeout(() => {
                 setPulledCount(prev => prev + 1);
-            }, 250);
+            }, 70);
             return () => clearTimeout(timer);
-        } else if (phase === 'pulling' && pulledCount >= screenshots.length) {
-            const timer = setTimeout(() => setPhase('carousel'), 800);
+        } else if (phase === 'pulling' && pulledCount >= maxPullCards) {
+            const timer = setTimeout(() => setPhase('carousel'), 200);
             return () => clearTimeout(timer);
         }
-    }, [phase, pulledCount, screenshots.length]);
+    }, [phase, pulledCount, maxPullCards]);
 
     // ========== CAROUSEL NAVIGATION ==========
     const goToPrev = useCallback(() => {
@@ -187,14 +188,17 @@ const DemoCarousel: React.FC<DemoCarouselProps> = ({ screenshots, projectTitle, 
 
             {/* ========== TISSUE-PULL PHASE ========== */}
             {phase === 'pulling' && (
-                <div className="flex-1 flex items-center justify-center">
+                <div 
+                    className="flex-1 flex flex-col items-center justify-center cursor-pointer select-none"
+                    onClick={() => setPhase('carousel')}
+                >
                     <div className="relative w-80 md:w-96 h-56 md:h-64">
-                        {screenshots.slice(0, pulledCount).map((screenshot, idx) => {
+                        {screenshots.slice(0, Math.max(pulledCount, 1)).map((screenshot, idx) => {
                             const stackOffset = (pulledCount - 1 - idx) * 6;
                             return (
                                 <motion.div
                                     key={screenshot.id}
-                                    initial={{ y: 80, opacity: 0, scale: 0.9 }}
+                                    initial={{ y: 60, opacity: 0, scale: 0.95 }}
                                     animate={{
                                         y: -stackOffset,
                                         x: stackOffset * 0.5,
@@ -202,7 +206,7 @@ const DemoCarousel: React.FC<DemoCarouselProps> = ({ screenshots, projectTitle, 
                                         scale: 1,
                                         rotate: (idx % 2 === 0 ? 1 : -1) * (idx * 0.5)
                                     }}
-                                    transition={{ type: 'spring', damping: 20, stiffness: 200 }}
+                                    transition={{ type: 'spring', damping: 22, stiffness: 280 }}
                                     className="absolute inset-0 rounded-xl overflow-hidden shadow-2xl"
                                     style={{
                                         zIndex: idx,
@@ -212,6 +216,8 @@ const DemoCarousel: React.FC<DemoCarouselProps> = ({ screenshots, projectTitle, 
                                     <img
                                         src={screenshot.url}
                                         alt={screenshot.title}
+                                        loading="eager"
+                                        decoding="async"
                                         className="w-full h-full object-cover"
                                     />
                                     <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/90 to-transparent">
@@ -221,15 +227,13 @@ const DemoCarousel: React.FC<DemoCarouselProps> = ({ screenshots, projectTitle, 
                             );
                         })}
 
-                        {/* Loading indicator */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="absolute -bottom-14 left-1/2 -translate-x-1/2 text-sm font-medium"
-                            style={{ color: hexToRgba(primaryColor, 0.8) }}
+                        {/* Snappy Click to View Indicator */}
+                        <div
+                            className="absolute -bottom-14 left-1/2 -translate-x-1/2 text-xs font-medium px-4 py-1.5 rounded-full glass-effect hover:bg-white/10 transition-colors"
+                            style={{ color: primaryColor }}
                         >
-                            Loading... {pulledCount}/{screenshots.length}
-                        </motion.div>
+                            Opening demo... (or click to view)
+                        </div>
                     </div>
                 </div>
             )}

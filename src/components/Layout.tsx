@@ -13,25 +13,22 @@ interface LayoutProps {
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 50,
-    scale: 0.95,
+    y: 12,
   },
   in: {
     opacity: 1,
     y: 0,
-    scale: 1,
   },
   out: {
     opacity: 0,
-    y: -50,
-    scale: 1.05,
+    y: -8,
   },
 };
 
 const pageTransition = {
   type: "tween" as const,
-  ease: "anticipate" as const,
-  duration: 0.6,
+  ease: "easeOut" as const,
+  duration: 0.18,
 };
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {

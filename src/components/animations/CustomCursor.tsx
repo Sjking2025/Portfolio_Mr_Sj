@@ -1,33 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useTheme } from '@/contexts/ThemeContext';
 import { getAnimationSettings } from '@/lib/performance';
 
 interface CustomCursorProps {
-    // Optional customization
     size?: number;
     color?: string;
 }
 
 const CustomCursor: React.FC<CustomCursorProps> = ({
-    size = 20,
-    color = 'hsl(var(--primary))',
+    size = 24,
+    color,
 }) => {
-    const cursorRef = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-    const [cursorVariant, setCursorVariant] = useState<'default' | 'hover' | 'click' | 'text'>('default');
-    const [cursorText, setCursorText] = useState('');
+    const { currentTheme } = useTheme();
+    const cursorColor = color || currentTheme.preview.primary;
+    const ringRef = useRef<HTMLDivElement>(null);
+    const dotRef = useRef<HTMLDivElement>(null);
     const [isEnabled, setIsEnabled] = useState(false);
 
-    // Mouse position with spring for smooth following
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    const springConfig = { damping: 25, stiffness: 400 };
-    const cursorX = useSpring(mouseX, springConfig);
-    const cursorY = useSpring(mouseY, springConfig);
-
     useEffect(() => {
-        // Check performance and hover support
         const settings = getAnimationSettings();
         const hasHover = window.matchMedia('(hover: hover)').matches;
 
@@ -38,159 +28,89 @@ const CustomCursor: React.FC<CustomCursorProps> = ({
 
         setIsEnabled(true);
 
-        const moveCursor = (e: MouseEvent) => {
-            mouseX.set(e.clientX);
-            mouseY.set(e.clientY);
-        };
+        let mouseX = -100;
+        let mouseY = -100;
+        let ringX = -100;
+        let ringY = -100;
+        let isHoveringInteractive = false;
+        let rafId: number;
 
-        const handleMouseEnter = () => setIsVisible(true);
-        const handleMouseLeave = () => setIsVisible(false);
+        const onMouseMove = (e: MouseEvent) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
 
-        // Track hover states
-        const handleElementHover = (e: MouseEvent) => {
-            const target = e.target as HTMLElement;
-
-            // Check for interactive elements
-            const isButton = target.closest('button, a, [role="button"]');
-            const isInput = target.closest('input, textarea, select');
-            const hasViewText = target.closest('[data-cursor="view"]');
-            const hasClickText = target.closest('[data-cursor="click"]');
-
-            if (hasViewText) {
-                setCursorVariant('text');
-                setCursorText('View');
-            } else if (hasClickText) {
-                setCursorVariant('text');
-                setCursorText('Click');
-            } else if (isButton) {
-                setCursorVariant('hover');
-                setCursorText('');
-            } else if (isInput) {
-                setCursorVariant('default');
-                setCursorText('');
-            } else {
-                setCursorVariant('default');
-                setCursorText('');
+            // Immediately position the center dot with zero latency
+            if (dotRef.current) {
+                dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
             }
         };
 
-        const handleClick = () => {
-            setCursorVariant('click');
-            setTimeout(() => {
-                setCursorVariant('default');
-            }, 150);
+        const onMouseOver = (e: MouseEvent) => {
+            const target = e.target as HTMLElement | null;
+            if (target && target.closest('button, a, input, textarea, select, [role="button"], .cursor-pointer')) {
+                isHoveringInteractive = true;
+            } else {
+                isHoveringInteractive = false;
+            }
         };
 
-        window.addEventListener('mousemove', moveCursor);
-        window.addEventListener('mousemove', handleElementHover);
-        document.addEventListener('mouseenter', handleMouseEnter);
-        document.addEventListener('mouseleave', handleMouseLeave);
-        window.addEventListener('click', handleClick);
+        // Smooth 60fps RAF follower for the outer accent ring (lerp with high responsiveness)
+        const updateFollower = () => {
+            // Fast 0.35 lerp factor for instant, snappy follow without sluggish lag
+            ringX += (mouseX - ringX) * 0.35;
+            ringY += (mouseY - ringY) * 0.35;
 
-        setIsVisible(true);
+            if (ringRef.current) {
+                const scale = isHoveringInteractive ? 1.6 : 1;
+                ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(${scale})`;
+                ringRef.current.style.borderColor = isHoveringInteractive ? cursorColor : `${cursorColor}80`;
+                ringRef.current.style.backgroundColor = isHoveringInteractive ? `${cursorColor}18` : 'transparent';
+            }
+
+            rafId = requestAnimationFrame(updateFollower);
+        };
+
+        window.addEventListener('mousemove', onMouseMove, { passive: true });
+        window.addEventListener('mouseover', onMouseOver, { passive: true });
+        rafId = requestAnimationFrame(updateFollower);
 
         return () => {
-            window.removeEventListener('mousemove', moveCursor);
-            window.removeEventListener('mousemove', handleElementHover);
-            document.removeEventListener('mouseenter', handleMouseEnter);
-            document.removeEventListener('mouseleave', handleMouseLeave);
-            window.removeEventListener('click', handleClick);
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseover', onMouseOver);
+            cancelAnimationFrame(rafId);
         };
-    }, [mouseX, mouseY]);
+    }, [cursorColor]);
 
-    const variants = {
-        default: {
-            width: size,
-            height: size,
-            backgroundColor: 'transparent',
-            border: `2px solid ${color}`,
-            mixBlendMode: 'difference' as const,
-        },
-        hover: {
-            width: size * 2.5,
-            height: size * 2.5,
-            backgroundColor: `${color}20`,
-            border: `2px solid ${color}`,
-            mixBlendMode: 'normal' as const,
-        },
-        click: {
-            width: size * 0.8,
-            height: size * 0.8,
-            backgroundColor: color,
-            border: `2px solid ${color}`,
-            mixBlendMode: 'normal' as const,
-        },
-        text: {
-            width: size * 4,
-            height: size * 4,
-            backgroundColor: `${color}90`,
-            border: 'none',
-            mixBlendMode: 'normal' as const,
-        },
-    };
-
-    // Don't render on mobile/touch devices or if disabled for performance
     if (!isEnabled) {
         return null;
     }
 
     return (
         <>
-            {/* Main cursor */}
-            <motion.div
-                ref={cursorRef}
-                className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] flex items-center justify-center"
+            {/* Outer accent glow ring - follows smoothly via GPU translate3d with zero React re-renders */}
+            <div
+                ref={ringRef}
+                className="fixed top-0 left-0 pointer-events-none z-[99999] rounded-full transition-[background-color,border-color,width,height] duration-150 ease-out"
                 style={{
-                    x: cursorX,
-                    y: cursorY,
-                    translateX: '-50%',
-                    translateY: '-50%',
-                }}
-                variants={variants}
-                animate={cursorVariant}
-                transition={{
-                    type: 'spring',
-                    damping: 20,
-                    stiffness: 300,
-                    mass: 0.5,
-                }}
-            >
-                {cursorText && (
-                    <motion.span
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        className="text-white text-xs font-medium"
-                    >
-                        {cursorText}
-                    </motion.span>
-                )}
-            </motion.div>
-
-            {/* Cursor dot (always follows precisely) */}
-            <motion.div
-                className="fixed top-0 left-0 w-1 h-1 rounded-full pointer-events-none z-[9999]"
-                style={{
-                    x: mouseX,
-                    y: mouseY,
-                    translateX: '-50%',
-                    translateY: '-50%',
-                    backgroundColor: color,
-                    opacity: isVisible ? 1 : 0,
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    border: `1.5px solid ${cursorColor}80`,
+                    willChange: 'transform',
                 }}
             />
 
-            {/* Hide default cursor */}
-            <style>{`
-        * {
-          cursor: none !important;
-        }
-        @media (hover: none) {
-          * {
-            cursor: auto !important;
-          }
-        }
-      `}</style>
+            {/* Instant micro-dot - exact cursor location at 0ms latency */}
+            <div
+                ref={dotRef}
+                className="fixed top-0 left-0 pointer-events-none z-[99999] rounded-full"
+                style={{
+                    width: '5px',
+                    height: '5px',
+                    backgroundColor: cursorColor,
+                    boxShadow: `0 0 8px ${cursorColor}`,
+                    willChange: 'transform',
+                }}
+            />
         </>
     );
 };

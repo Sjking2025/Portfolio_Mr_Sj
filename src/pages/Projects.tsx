@@ -243,9 +243,9 @@ const Projects = () => {
     <div className="min-h-screen px-4 pt-32 pb-16">
       <div className="container mx-auto max-w-7xl">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.35 }}
           className="space-y-16"
         >
           {/* Header */}
@@ -270,20 +270,22 @@ const Projects = () => {
               {[projects.find(p => p.id === 9), projects.find(p => p.id === 6)].map((project, index) => (
                 <motion.div
                   key={project?.id}
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.15 }}
-                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.35, delay: index * 0.08 }}
+                  whileHover={{ y: -4 }}
                   className="group relative rounded-3xl overflow-hidden min-h-[320px] cursor-pointer"
                   data-cursor="view"
                   onClick={() => setActiveProject(project?.id ?? null)}
                 >
                   <div className="absolute inset-0">
                     <motion.img
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ duration: 0.5 }}
+                      whileHover={{ scale: 1.04 }}
+                      transition={{ duration: 0.25 }}
                       src={project?.image}
                       alt={project?.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
@@ -369,21 +371,23 @@ const Projects = () => {
                 <motion.div
                   key={project.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.8 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ y: -10, scale: 1.02 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.25, delay: Math.min(index * 0.04, 0.16) }}
+                  whileHover={{ y: -6 }}
                   className="glass-effect rounded-3xl overflow-hidden group cursor-pointer"
                   data-cursor="view"
                 >
                   {/* Project image */}
                   <div className="relative h-48 overflow-hidden">
                     <motion.img
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.3 }}
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.25 }}
                       src={project.image}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>

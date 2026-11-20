@@ -23,8 +23,8 @@ export const initSmoothScroll = (): Lenis | null => {
         orientation: 'vertical',
         gestureOrientation: 'vertical',
         smoothWheel: true,
-        wheelMultiplier: profile.isLowEnd ? 1.5 : 1, // Faster scroll on low-end
-        touchMultiplier: 2,
+        wheelMultiplier: 1.15,
+        touchMultiplier: 1.5,
     });
 
     // Animation frame loop with cleanup support

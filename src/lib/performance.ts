@@ -82,12 +82,12 @@ export const getAnimationSettings = () => {
             enableParticles: false, // Disable particles
             enableTilt: false, // Disable 3D tilt
             enableTextSplit: false, // Disable text splitting
-            scrollDuration: 0.8,
-            transitionDuration: 0.3,
+            scrollDuration: 0.4,
+            transitionDuration: 0.2,
         };
     }
 
-    // High-end defaults
+    // High-end defaults - tuned for snappy, immediate responsiveness
     return {
         enableCursor: true,
         enableSmoothScroll: true,
@@ -95,8 +95,8 @@ export const getAnimationSettings = () => {
         enableParticles: true,
         enableTilt: true,
         enableTextSplit: true,
-        scrollDuration: 1.2,
-        transitionDuration: 0.8,
+        scrollDuration: 0.5,
+        transitionDuration: 0.25,
     };
 };
 
